@@ -1,0 +1,740 @@
+---
+title: "Summarizing Longitudinal Substance Use as Quinary Words"
+author: "Gabriel Odom and Raymond Balise"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+      toc: true
+      toc_depth: 4
+vignette: >
+  %\VignetteIndexEntry{Summarizing Substance Use}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, echo=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	message = FALSE,
+	warning = FALSE,
+	collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Introduction
+
+Here are the packages we need for this vignette:
+```{r packages}
+library(public.ctn0094data)
+library(public.ctn0094extra)
+library(dplyr)
+library(purrr)
+library(tibble)
+library(tidyr)
+library(stringr)
+```
+
+In this vignette, we will walk through the basic procedures to collapse participants' Urine Drug Screen (UDS) or Timeline Follow-Back (TLFB) data streams into [quinary word](https://doi.org/10.1371/journal.pone.0291248) summaries for downstream analysis. The basic steps are:
+
+1. calculate the *induction* delay (difference, in days, between the day a participant was randomized to a trial arm and the day that they received the first dose of study drug). The `public.ctn0094data` database has a) the day of randomization and b) the days for which study drugs were administered, relative to Day 0 (the day study consent was signed).
+2. partition the study days into weeks, then mark which weeks do not have a UDS collection event (these will be marked as "missing").
+3. summarize the UDS data within each participant by week into symbols using [quinary word logic](https://doi.org/10.1371/journal.pone.0291248), then collapse the symbols into a participant-specific "word".
+
+Rather than perform these calculations on all ~3600 participants included in `public.ctn0094data` and `public.ctn0094extra`, we will use the following 10 participants as examples:
+```{r}
+examplePeople_int <- c(1L, 163L, 210L, 242L, 4L, 17L, 13L, 1103L, 233L, 2089L)
+```
+
+
+-------------------------------------------------------------------------------
+
+</br>
+
+
+# Calculate Induction Delay
+As we mentioned above, the *induction* delay is the difference, in days, between the day a participant was randomized to a trial arm and the day that they received the first dose of study drug. The reason we need this is because any UDS collected or TLFB recorded on or before the induction day must be considered *pre-treatment*, even if the participant has already been assigned to a treatment arm.
+
+
+## Data Setup
+The `randomization` day includes a first and second randomization day for all participants. For CTN-0027 and CTN-0051, these days are the same; for CTN-0030 these days are different. In order to find the induction delay, we only need the first randomization event
+```{r trim-data-1}
+data_ls <- loadRawData(c("randomization", "treatment"))
+
+data_ls$randomization <-
+  data_ls$randomization %>%
+  select(who, when, treatment, randomized = which) %>%
+  # Remove second randomization events
+  filter(randomized != 2) %>% 
+  # Retain example participants
+  filter(who %in% examplePeople_int)
+
+data_ls$treatment <- 
+  data_ls$treatment %>% 
+  # Retain example participants
+  filter(who %in% examplePeople_int)
+```
+
+Let's inspect our results:
+```{r view-data-1}
+data_ls$randomization
+
+data_ls$treatment
+```
+
+
+## Mark Study Days with Administered Treatment Drugs
+Some participants were marked as receiving 0mg of the study drug to which they were assigned. We want to mark all the days where a participant actually got some of the assigned study drug.
+```{r mark-study-drug-days}
+treatTimeLong_df <-
+  # Collapse Data List
+  data_ls %>%
+  reduce(.f = full_join, by = c("who", "when")) %>%
+  as_tibble() %>%
+  arrange(who, when) %>%
+  # First pass: find any day with a dose of treatment drug
+  rowwise() %>%
+  mutate(
+    treated = if_else(
+      condition = !is.na(amount) & amount > 0,
+      true = TRUE,
+      false = FALSE,
+      missing = FALSE
+    )
+  )
+
+# Inspect results
+treatTimeLong_df
+```
+
+
+## Measure Difference from Randomization Day to Day of First Dose
+Some participants received their first non-zero dose of their assigned study drug days after they were assigned to a treatment arm. If the subject supplies a UDS sample positive for substances of interest or records a substance use event in the TLFB after they were assigned to treatment but before they received treatment, these should not count against the efficacy of the study drug. **NOTE: under the "intent to treat" paradigm, this is not the case. For example, it is challenging for some patients to start treatment with Naltrexone, so evaluating treatment efficacy fairly often requires us to include this time after treatment assignment but before induction.**
+```{r calculate-induction-delay}
+inductDelay_df <-
+  treatTimeLong_df %>%
+  # Find the day of the first treatment
+  group_by(who) %>%
+  arrange(when) %>%
+  filter(treated) %>%
+  slice(1) %>%
+  mutate(treatStart = when) %>%
+  select(who, when, treatStart) %>%
+  # Add the first day back to the original data
+  left_join(treatTimeLong_df, ., by = c("who", "when")) %>%
+  group_by(who) %>%
+  fill(treatStart, .direction = "updown") %>%
+  # Calculate the delay
+  filter(randomized == 1) %>%
+  # This sets time to be missing if the induction was not observed
+  mutate(inductDelay = treatStart - when) %>%
+  select(who, treatment, inductDelay) %>%
+  ungroup()
+
+# Inspect results
+inductDelay_df
+```
+
+```{r echo=FALSE}
+eg_df <-
+  inductDelay_df %>% 
+  filter(inductDelay > 0)
+```
+
+We can see that participant `r eg_df$who` received their first dose of `r eg_df$treatment` `r eg_df$inductDelay` days after they were assigned to that treatment arm.
+```{r echo=FALSE}
+rm(eg_df)
+```
+
+Let's clean up our environment before we move on:
+```{r clean-up-1}
+rm(data_ls, treatTimeLong_df)
+```
+
+
+
+
+-------------------------------------------------------------------------------
+
+</br>
+
+
+# Partition Visit Weeks and Impute Missing Visits
+Now that we have the study day for which each participant received their first dose of study drug (induction day), we can partition the study days into weeks before and after induction delay as pre-study / baseline period and study period, respectively.
+
+
+## "Backbone" Timeline of Clinical Protocol
+If we want to know which visits were missed, we first need to know which visits were required by the protocols of the three studies.
+
+### CTN-0027 and CTN-0051 Protocols
+This code will create a table with the subject ID, which trial they participated in, and a column of all possible trial contact days, from 30 days prior to consent to 24 weeks after. See the function documentation for `CreateProtocolHistory()` for more information.
+```{r backbone-2751}
+start_int <- c(`27` = -30L, `51` = -30L)
+end_int   <- c(`27` = 168L, `51` = 168L)
+backbone2751_df <- 
+  CreateProtocolHistory(
+	  start_vec = start_int,
+	  end_vec = end_int
+	) %>% 
+  filter(who %in% examplePeople_int)
+
+# Inspect
+ backbone2751_df
+```
+
+### CTN-0030 Protocol
+Because the CTN-0030 protocol was adaptive, the amount of time requested to be spent in the study will change based on the participants' reactions to the first phase of treatment. See the function documentation for `CreateCTN30ProtocolHistory()` for more information.
+```{r backbone-30}
+backbone30_df <-
+	randomization %>%
+	full_join(everybody, by = "who") %>%
+	filter(project == "30") %>%
+  filter(who %in% examplePeople_int) %>% 
+	CreateCTN30ProtocolHistory() %>%
+	mutate(project = "30") %>%
+	select(who, project, when)
+
+# Inspect
+backbone30_df
+
+backbone30_df %>% 
+  group_by(who) %>% 
+  summarise(lastDay = max(when))
+```
+
+We can clearly see that the protocol length for some participants in CTN-0030 was much longer than others.
+
+### Combined "Backbone"
+We can now combine these two datasets and clean up our environment.
+```{r backbone-first}
+backbone_df <-
+  bind_rows(backbone2751_df, backbone30_df) %>%
+	arrange(who)
+
+rm(backbone2751_df, backbone30_df, start_int, end_int)
+```
+
+
+## Mark Missing Visits
+Now that we know the start of treatment and range of expected participation days per protocol, we can take the "difference" to find out when participants were supposed to visit the clinic, but did not.
+
+### Data Setup
+Let's set up the data for our example people:
+```{r trim-data-2}
+data_ls <- loadRawData(c("randomization", "visit"))
+
+data_ls$randomization <-
+  data_ls$randomization %>%
+  select(who, when, treatment, randomized = which) %>%
+  # Remove second randomization events
+  filter(randomized != 2) %>% 
+  # Retain example participants
+  filter(who %in% examplePeople_int)
+
+data_ls$visit <- 
+  data_ls$visit %>% 
+  filter(who %in% examplePeople_int)
+```
+
+### Add First Randomization Day
+```{r add-randomization-day}
+timelineRand1_df <-
+	data_ls$randomization %>%
+	mutate(randomized = randomized == "1") %>%
+	# Join to backbone and arrange within subject by day
+	full_join(backbone_df, by = c("who", "when")) %>%
+	group_by(who) %>%
+	arrange(when, .by_group = TRUE) %>%
+	select(who, project, when, randomized)
+
+# Inspect
+timelineRand1_df
+```
+
+### Add on the Visit Days
+```{r add-visit-days}
+timelineVisit1_df <-
+	data_ls$visit %>%
+	select(who, when, visit, status = what) %>%
+	filter(status %in% c("visit", "final")) %>%
+	mutate(visit = TRUE) %>%
+	select(who, when, visit) %>%
+	left_join(timelineRand1_df, ., by = c("who", "when"))
+
+# Inspect
+timelineVisit1_df
+```
+
+Most (6 of 7 days, on average) of the data will be missing values (shown by `NA`) because participants were not expected to visit the clinic more than once per week.
+
+### Impute the Missing Visits
+This function will assign visit values to "missing" roughly every seven days that a visit hasn't been recorded. See the function documentation for `MarkMissing()` for more information. *Note: this function can take a while to run if used on thousands of participants over dozens of weeks each.*
+```{r mark-missing-visits}
+timelineMissing1_df <- MarkMissing(timelineVisit1_df) 
+```
+
+### Clean up the Results
+We aren't showing the results from the function above because they still need to be wrangled a bit.
+```{r tidy-missing-visit-marks}
+derived_visitImputed <-
+	timelineMissing1_df %>%
+  mutate(visit = as.character(visit)) %>%
+	replace_na(list(visit = "", visitYM = "")) %>%
+	mutate(visitImputed = paste0(visit, visitYM)) %>%
+	mutate(
+		visitImputed = str_replace(
+			visitImputed, pattern = "TRUETRUE", replacement = "Present"
+		)
+	) %>%
+	select(who, when, visitImputed) %>%
+	filter(visitImputed != "") %>%
+	ungroup()
+
+# Inspect
+derived_visitImputed
+```
+
+Let's now clean up our environment:
+```{r clean-up-2}
+rm(
+  backbone_df, data_ls, timelineMissing1_df, timelineRand1_df, timelineVisit1_df
+)
+```
+
+-------------------------------------------------------------------------------
+
+</br>
+
+
+# Summarize Weekly Substance Use Results
+This step is the most involved, so we will only show the steps necessary to complete this task for our 10 example participants. However, the full workflow is available at <LINK>. The general steps for randomized trial participants in this procedure are:
+
+1. Determine which treatment arm to which each participant was assigned. Recall that buprenorphine can be used both as a standard treatment and an illicit substance. Therefore, having a TLFB record of or UDS positive for buprenorphine for a particular study day should not automatically be counted as "substance misuse".
+2. For the substance(s) of interest (in our case, opioids), indicate their presence (or absence) in participants' data streams for each study visit day. This will result in a "long" data table with one row per participant per study visit and a logical value indicating if the participant used the substance(s) of interest on that day.
+3. Create a "ticker" of study days, then partition these days into study weeks. For an "intent to treat" analysis, day 0 should be the randomization day. Otherwise, day 0 should be the induction day calculated above. *Note: we will use an "intent to treat" analysis from this point on.*
+4. Summarize substance use within each study week using a [quinary word](https://doi.org/10.1371/journal.pone.0291248). For many participants, they have at least one week wherein more than one UDS sample was supplied. Our combination logic to summarize detected weekly substance use is as follows: if all UDS samples within that study week are positive for the substance(s) of interest, then the week is marked "+". If all UDS samples are negative for the substance(s) of interest, then the week is marked "-". If there is a mixture, the week is marked "\*". If the participant was supposed to supply a urine sample in that week but did not, then the week is marked "o". If the participant was not supposed to supply a urine sample in that week (and did not supply one), then the week is marked "\_".
+5. Group these weekly summaries into trial phase (baseline / pre-randomization, phase 1, or phase 2 [CTN-0030 only]) and collapse into a single string.
+
+You may have participants who consented to join the trial but were never randomized to a treatment arm. For these individuals, if a "complete study summary" is required (that is, you must include all participants who consented, even if they never were randomized), we recommend creating a use pattern word which is either all "o" or all "\_".
+
+
+## Data Setup
+First we build our data "backbone" as above (showing here to mirror the work done in the analysis script):
+```{r backbone-again}
+# CTN-0027 and CTN-0051
+start_int <- c(`27` = -30L, `51` = -30L)
+end_int   <- c(`27` = 168L, `51` = 168L) # 24 weeks
+backbone2751_df <- CreateProtocolHistory(
+	start_vec = start_int, end_vec = end_int
+)
+
+# CTN-0030
+backbone30_df <-
+	randomization %>%
+	full_join(everybody, by = "who") %>%
+	filter(project == "30") %>%
+	CreateCTN30ProtocolHistory() %>%
+	mutate(project = "30") %>%
+	select(who, project, when)
+
+# All Days
+backbone_df <- bind_rows(
+	backbone2751_df, backbone30_df
+) %>%
+	arrange(who) %>%
+  mutate(project = factor(project, levels = c("27", "30", "51"))) %>% 
+  filter(who %in% examplePeople_int)
+
+rm(backbone2751_df, backbone30_df, start_int, end_int)
+```
+
+Now we create a data set that combines the treatment arm with the imputed visits data we calculated above.
+```{r}
+randomized_df <-
+  randomization %>%
+  filter(who %in% examplePeople_int) %>% 
+  mutate(randomized = as.integer(as.character(which))) %>%
+  select(who, when, randomized) %>%
+  left_join(everybody, by = "who") %>%
+  filter( !(randomized == 2 & project %in% c("27", "51")) ) %>%
+  select(-project)
+
+udsUse2_df <-
+	backbone_df %>%
+	left_join(randomized_df, by = c("who", "when")) %>%
+	left_join(derived_visitImputed, by = c("who", "when")) %>%
+	left_join(uds, by = c("who", "when")) %>%
+	# So we can use MarkUse() with UDS data (instead of all_drugs)
+	mutate(source = "UDS")
+```
+
+This data set is an interesting one. It has one record per participant, per study day, *per substance reported*. So, because we are using UDS, this means that only rows which correspond to *study visit days* wherein a urine sample was supplied and positive for multiple substances will be duplicated. If we had used TLFB data instead, a data table in this form would be orders of magnitude longer, with many rows per participant per day. Here are visit days wherein substances were detected in the urine of participant 0017:
+```{r eg-visit-day-substances}
+udsUse2_df %>% 
+  filter(visitImputed == "Present") %>% 
+  filter(!is.na(what)) %>% 
+  filter(who == 17) %>% 
+  print(n = nrow(.))
+```
+
+
+## Participant's Assigned Treatment 
+Which substances are considered "approved" and which are "illicit"?
+```{r good-drugs-bad-drugs}
+nonStudyOpioids_ls <- list(
+  "Buprenorphine" = c("Opioid", "Methadone"),
+  "Methadone"     = c("Opioid", "Buprenorphine"),
+  "Naltrexone"    = c("Opioid", "Methadone", "Buprenorphine"),
+  "Not treated"   = c("Opioid", "Methadone", "Buprenorphine")
+)
+```
+
+Now we extract the treatment groups for each clinical trial, so that we can mark "illicit" buprenorphine and methadone appropriately.
+```{r treatment-groups}
+treatGroups_ls <-
+  public.ctn0094data::randomization %>%
+  filter(who %in% examplePeople_int) %>% 
+  filter(which == 1) %>%
+  left_join(everybody, by = "who") %>%
+  select(who, treatment) %>%
+  mutate(
+    treat_drug = case_when(
+      str_detect(treatment, "BUP") ~ "Buprenorphine",
+      treatment == "Methadone" ~ "Methadone",
+      treatment == "Inpatient NR-NTX" ~ "Naltrexone"
+    )
+  ) %>%
+  select(-treatment) %>%
+  split(f = .$treat_drug) %>%
+  map(.f = "who")
+
+# Inspect
+treatGroups_ls
+```
+
+This shows us which participants were assigned to buprenorphine, methadone, and naltrexone, respectively. We can now compare the substances present in urine against the substances the participants are supposed to have in their urine. For more information, see the documentation for the `MarkUse()` function.
+```{r mark-non-study-drug-use, warning=TRUE}
+opioidUse_df <-
+  udsUse2_df %>%
+  mutate(
+    treat_group = case_when(
+      who %in% treatGroups_ls$Buprenorphine ~ "Buprenorphine",
+      who %in% treatGroups_ls$Methadone     ~ "Methadone",
+      who %in% treatGroups_ls$Naltrexone    ~ "Naltrexone",
+      TRUE                                  ~ "Not treated"
+    )
+  ) %>%
+  split(f = .$treat_group) %>%
+  # List of data in alphabetical order, so the non-study drugs ls should match
+  map2(
+    .y = nonStudyOpioids_ls,
+    .f = ~{
+      # REQUIRES "source" COLUMN
+      MarkUse(
+        targetDrugs_char = .y,
+        drugs_df = .x,
+        # because we have participants with no recorded UDS; in practice DO NOT
+        #   use this command
+        retainEmptyRows = TRUE
+      ) 
+    }
+  ) %>%
+  bind_rows() %>%
+  mutate(
+    udsOpioid = case_when(
+       is.na(when) ~ NA,
+      !is.na(when) ~ TRUE
+    )
+  ) %>% 
+  select(who, when, udsOpioid)
+```
+
+All of the drugs marked above would still be individual rows, so we want to get back to "one row per person per day"
+```{r timeline-to-one-row-per-day}
+timelineUDS_df <-
+	udsUse2_df %>%
+	left_join(opioidUse_df, by = c("who", "when")) %>%
+	select(-what, -source) %>%
+  # 2,089 rows to 1,994
+	distinct()
+
+rm(
+  derived_visitImputed, opioidUse_df, randomized_df, treatGroups_ls, udsUse2_df
+)
+```
+
+
+## Counting Days Since Randomization
+Do we state that by definition any person who wasn't randomized is an early treatment failure? In the sense of evaluating treatment efficacy, yes; in evaluating the subject, no. Regardless, no matter the treatment outcome definition, participants without a randomization date will be listed as treatment failures under the "intent to treat" paradigm.
+```{r sets-of-randomized-people}
+wasRandomized_int <-
+	timelineUDS_df %>%
+	group_by(who) %>%
+	summarise(randomized = any(randomized %in% 1:2)) %>%
+	filter(randomized) %>%
+	pull(who)
+notRandomized_int <-
+	timelineUDS_df %>%
+	filter( !(who %in% wasRandomized_int) ) %>%
+	pull(who) %>%
+	unique()
+
+# Was randomized:
+wasRandomized_int
+
+# Wasn't
+notRandomized_int
+```
+
+Now we need a Study Day ticker (for randomized subjects only). Recall that CTN-0030 trial participants potentially have 2 randomization days.
+```{r study-day-ticker-randomized}
+timelineUDS2_df <-
+	timelineUDS_df %>%
+	filter(who %in% wasRandomized_int) %>%
+	group_by(who) %>%
+  filter(!is.na(randomized)) %>%
+	mutate(
+		whenRandomized1 = case_when(randomized == 1 ~ when),
+		whenRandomized2 = case_when(randomized == 2 ~ when)
+	) %>%
+	select(who, when, whenRandomized1, whenRandomized2) %>%
+	left_join(timelineUDS_df, ., by = c("who", "when")) %>%
+	filter(who %in% wasRandomized_int) %>%
+	# Add back in the groupings BEFORE the fill()
+	group_by(who) %>%
+	fill(whenRandomized1, .direction = "updown") %>%
+	fill(whenRandomized2, .direction = "updown") %>%
+	mutate(daysSinceRand1 = when - whenRandomized1) %>%
+	mutate(daysSinceRand2 = when - whenRandomized2) %>%
+	select(-whenRandomized1, -whenRandomized2)
+```
+
+
+## Symbolically Summarize Participant UDS by Study Week
+We puts the first day of "study week 1" on the day after randomization, not on the day of consent, but consent could have been signed also on the same day as randomization.
+```{r weekly-use-summary}
+weeklyUse_df <-
+  timelineUDS2_df %>%
+  # The (daysSinceRand1 - 1) adjustment is to ensure that the first study week
+  #   is a full 7 days, since "day 0" is the day before randomization. The "+1"
+  #   at the end is to shift the study week label such that "week 0" is the 
+  #   week *BEFORE* treatment, rather than the first week of treatment. So, the
+  #   randomization day is the last day of "week 0" (the pre-treatment period).
+  mutate(studyWeek1 = (daysSinceRand1 - 1) %/% 7 + 1) %>%
+  mutate(studyWeek2 = (daysSinceRand2 - 1) %/% 7 + 1) %>%
+  group_by(who, studyWeek1) %>%
+  # There are some study weeks with multiple UDS, so we count the number of
+  #   positive and negative UDS per week.
+  summarise(
+    nPosUDS  = sum(udsOpioid == 1, na.rm = TRUE),
+    nNegUDS  = sum(visitImputed == "Present" & is.na(udsOpioid), na.rm = TRUE),
+    nMissing = sum(visitImputed == "Missing", na.rm = TRUE),
+    randWk1  = sum(randomized == 1, na.rm = TRUE) > 0,
+    randWk2  = sum(randomized == 2 & project == "30", na.rm = TRUE) > 0
+  ) %>%
+  ungroup()
+```
+
+Now we assign a single symbol to represent the UDS results for each participant week. The symbols are (+) for only positive UDS, (--) only negative UDS, (\*) at least one of each positive and negative UDS, (o) UDS required but not collected, or (\_) UDS not required.
+```{r single-week-symbols}
+useByWeekRandomized_df <-
+  weeklyUse_df %>%
+	mutate(
+		udsStatus = case_when(
+			# If we see a positive UDS and no negative UDS, it's positive
+			nPosUDS > 0  & nNegUDS == 0 ~ "+",
+			# If we see a negative UDS and no positive UDS, it's negative
+			nPosUDS == 0 & nNegUDS > 0  ~ "-",
+			# If we see both positive and negative UDS in a single week, it's both
+			#   (note that we can recode all "B"s to be "+" as necessary)
+			nPosUDS > 0  & nNegUDS > 0  ~ "*",
+			# If we don't have any UDS in a week after randomization, it's missing
+			# UPDATE 2022-03-08: I had this as a 0 originally, and I was using this
+			#   in context of consent, not randomization. This was wrong.
+			nPosUDS == 0 & nNegUDS == 0 & studyWeek1 >= 1 ~ "o",
+			# If none of the above are true, but we still have a missing value as
+			#   marked by the MarkMissing() function, then it's missing
+			nMissing > 0 ~ "o",
+			# If none of the above conditions are true (probably because it's a week
+			#   before randomization but not during a baseline visit for consent),
+			#   then leave it blank (pre-study)
+			TRUE ~ "_"
+		)
+	) %>%
+  group_by(who) %>%
+  # For CTN-0030, Phase II could have started on any day of the week, even in
+  #   the middle of a treatment week. If we try to start counting Phase II
+  #   weeks the day after treatment arms are switched, we can end up with the
+  #   last "week" of Phase I not having 7 days. I'm going to leave the first
+  #   week of Phase II as whatever week the switch happened in.
+  mutate(
+    rand1Active = studyWeek1 > 0,
+    # This returns 0 for any week before the Phase II randomization, and 1 for
+    #   the Phase II randomization week and all subsequent weeks (because the
+    #   randWk2 column is 1 only for the week of second randomization and 0 
+    #   all other rows).
+    rand2Active = cumsum(randWk2),
+    trialPhase  = rand1Active + rand2Active
+  ) %>%
+	select(
+	  who, studyWeek = studyWeek1, randWk1, randWk2, udsStatus, trialPhase
+	)
+```
+
+We then split these rows by trial phase, and collapse the weekly symbols into a single string.
+```{r use-patterns-by-phase}
+weeklyOpioidPatterns_df <-
+  useByWeekRandomized_df %>%
+  mutate(
+    phase = case_when(
+      trialPhase == 0L ~ "Baseline",
+      trialPhase == 1L ~ "Phase_1",
+      trialPhase == 2L ~ "Phase_2"
+    )
+  ) %>%
+  group_by(who, phase) %>%
+  summarise(
+    usePattern = paste0(udsStatus, collapse = "")
+  ) %>%
+  pivot_wider(names_from = "phase", values_from = "usePattern")
+
+weeklyOpioidPatterns_df
+```
+
+Notice that we have the opioid UDS results for each subject by week split into the various phases of the clinical trial. These summaries are in **quinary word** format, following the work in Odom et al. (2023) [<https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10490938/>].
+
+Our last step for the randomized participants is to mark the study weeks when these phases start and end.
+```{r use-pattern-phases-start-and-end}
+derived_weeklyOpioidPatternRand <-
+  useByWeekRandomized_df %>%
+  mutate(
+    randWeek1  = randWk1 * studyWeek,
+    randWeek2  = randWk2 * studyWeek
+  ) %>%
+  summarise(
+    startWeek  = min(studyWeek),
+    randWeek1  = max(randWeek1),
+    randWeek2  = if_else( all(randWeek2 == 0), NA_real_, max(randWeek2) ),
+    endWeek    = max(studyWeek)
+  ) %>%
+  # View this smaller data set before joining. In practice, you can comment out
+  #   this print() command.
+  print() %>% 
+  left_join(weeklyOpioidPatterns_df, by = "who")
+```
+
+
+## Symbolically Summarize Non-Randomized Participants UDS by Study Week
+There are some strange cases where non-randomized participants also submitted UDS samples during the clinical trial. We will also create quinary words for these participants, but note that most of the UDS results will be missing (symbolized by "o").
+```{r mark-use-non-randomized}
+nonRandUDS_df <-
+	backbone_df %>%
+	filter(who %in% notRandomized_int) %>%
+	left_join(uds) %>%
+	# MarkUse() requires a "source" column
+	mutate(source = "UDS") %>%
+	MarkUse(
+		targetDrugs_char = nonStudyOpioids_ls$`Not treated`,
+		drugs_df = .
+	) %>%
+  mutate(
+    udsOpioid = case_when(
+      !is.na(when) ~ TRUE,
+       is.na(when) ~ NA
+    )
+  ) %>% 
+	select(who, when, udsOpioid) %>%
+  # Uneccessary here, but some UDS records are duplicated
+	distinct()
+```
+
+Although not present in this small data example, there are positive UDS events among the non-randomized. We then construct a "study week" ticker to mark such weekly UDS results.
+```{r non-randomized-study-week}
+timelineNonRandUDS_df <-
+	backbone_df %>%
+	filter(who %in% notRandomized_int) %>%
+	left_join(nonRandUDS_df, by = c("who", "when")) %>%
+  # Because this week moves off of the consent date, there is no reason to add
+  #   a `(week - 1)` adjustment
+  mutate(studyWeek = when %/% 7 + 1) %>%
+	group_by(who, studyWeek) %>%
+	summarise(
+		posUDS  = sum(udsOpioid == 1, na.rm = TRUE) > 0
+	)
+```
+
+For these participants who were not randomized at all, they will only have "Phase I" missing values.
+```{r single-week-symbols-non-randomized}
+weeklyNonRandPatterns_df <-
+  timelineNonRandUDS_df %>%
+  mutate(
+    udsStatus = case_when(
+      # If they are positive, they are positive
+      posUDS ~ "+",
+      # If they aren't positive and it's after the consent week, they are
+      #   missing (because they weren't randomized)
+      !posUDS & studyWeek >= 1 ~ "o",
+      # If they aren't positive and it's on or before the consent week, then
+      #   leave it blank (pre-study)
+      !posUDS & studyWeek < 1 ~ "_"
+    )
+  ) %>%
+  mutate(
+    phase = case_when(
+      studyWeek <  1 ~ "Baseline",
+      studyWeek >= 1 ~ "Phase_1"
+    )
+  ) %>%
+  # Again, this print is unecessary, but here it make clear what we are doing
+  print() %>% 
+  group_by(who, phase) %>%
+  summarise(
+    usePattern = paste0(udsStatus, collapse = "")
+  ) %>%
+  pivot_wider(names_from = "phase", values_from = "usePattern") %>%
+  ungroup()
+
+weeklyNonRandPatterns_df
+```
+
+Finally, we add in the start and end weeks for these two phases.
+```{r non-randomized-start-and-end}
+derived_weeklyOpioidPatternNonRand <-
+  timelineNonRandUDS_df %>%
+  group_by(who) %>%
+  summarise(
+    startWeek  = min(studyWeek),
+    randWeek1  = NA_real_,
+    randWeek2  = NA_real_,
+    endWeek    = max(studyWeek)
+  ) %>%
+  left_join(weeklyNonRandPatterns_df, by = "who")
+```
+
+
+## Final Product
+At the end of this very long process, we have this:
+```{r final-product}
+derived_weeklyOpioidPattern <-
+	derived_weeklyOpioidPatternRand %>%
+	bind_rows(derived_weeklyOpioidPatternNonRand) %>%
+	arrange(who) %>%
+  replace_na(list(Phase_2 = ""))
+
+derived_weeklyOpioidPattern
+```
+
+
+-------------------------------------------------------------------------------
+
+</br>
+
+
+# Wrapping Up
+
+```{r}
+sessionInfo()
+```

@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Gabriel Odom and Raymond Balise" />
+
+<meta name="date" content="2023-11-21" />
+
+<title>Summarizing Longitudinal Substance Use as Quinary Words</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Summarizing Longitudinal Substance Use as
+Quinary Words</h1>
+<h4 class="author">Gabriel Odom and Raymond Balise</h4>
+<h4 class="date">2023-11-21</h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction" id="toc-introduction">Introduction</a></li>
+<li><a href="#calculate-induction-delay" id="toc-calculate-induction-delay">Calculate Induction Delay</a>
+<ul>
+<li><a href="#data-setup" id="toc-data-setup">Data Setup</a></li>
+<li><a href="#mark-study-days-with-administered-treatment-drugs" id="toc-mark-study-days-with-administered-treatment-drugs">Mark Study
+Days with Administered Treatment Drugs</a></li>
+<li><a href="#measure-difference-from-randomization-day-to-day-of-first-dose" id="toc-measure-difference-from-randomization-day-to-day-of-first-dose">Measure
+Difference from Randomization Day to Day of First Dose</a></li>
+</ul></li>
+<li><a href="#partition-visit-weeks-and-impute-missing-visits" id="toc-partition-visit-weeks-and-impute-missing-visits">Partition Visit
+Weeks and Impute Missing Visits</a>
+<ul>
+<li><a href="#backbone-timeline-of-clinical-protocol" id="toc-backbone-timeline-of-clinical-protocol">“Backbone” Timeline of
+Clinical Protocol</a>
+<ul>
+<li><a href="#ctn-0027-and-ctn-0051-protocols" id="toc-ctn-0027-and-ctn-0051-protocols">CTN-0027 and CTN-0051
+Protocols</a></li>
+<li><a href="#ctn-0030-protocol" id="toc-ctn-0030-protocol">CTN-0030
+Protocol</a></li>
+<li><a href="#combined-backbone" id="toc-combined-backbone">Combined
+“Backbone”</a></li>
+</ul></li>
+<li><a href="#mark-missing-visits" id="toc-mark-missing-visits">Mark
+Missing Visits</a>
+<ul>
+<li><a href="#data-setup-1" id="toc-data-setup-1">Data Setup</a></li>
+<li><a href="#add-first-randomization-day" id="toc-add-first-randomization-day">Add First Randomization
+Day</a></li>
+<li><a href="#add-on-the-visit-days" id="toc-add-on-the-visit-days">Add
+on the Visit Days</a></li>
+<li><a href="#impute-the-missing-visits" id="toc-impute-the-missing-visits">Impute the Missing Visits</a></li>
+<li><a href="#clean-up-the-results" id="toc-clean-up-the-results">Clean
+up the Results</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#summarize-weekly-substance-use-results" id="toc-summarize-weekly-substance-use-results">Summarize Weekly
+Substance Use Results</a>
+<ul>
+<li><a href="#data-setup-2" id="toc-data-setup-2">Data Setup</a></li>
+<li><a href="#participants-assigned-treatment" id="toc-participants-assigned-treatment">Participant’s Assigned
+Treatment</a></li>
+<li><a href="#counting-days-since-randomization" id="toc-counting-days-since-randomization">Counting Days Since
+Randomization</a></li>
+<li><a href="#symbolically-summarize-participant-uds-by-study-week" id="toc-symbolically-summarize-participant-uds-by-study-week">Symbolically
+Summarize Participant UDS by Study Week</a></li>
+<li><a href="#symbolically-summarize-non-randomized-participants-uds-by-study-week" id="toc-symbolically-summarize-non-randomized-participants-uds-by-study-week">Symbolically
+Summarize Non-Randomized Participants UDS by Study Week</a></li>
+<li><a href="#final-product" id="toc-final-product">Final
+Product</a></li>
+</ul></li>
+<li><a href="#wrapping-up" id="toc-wrapping-up">Wrapping Up</a></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Here are the packages we need for this vignette:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(public.ctn0094data)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(public.ctn0094extra)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div>
+<p>In this vignette, we will walk through the basic procedures to
+collapse participants’ Urine Drug Screen (UDS) or Timeline Follow-Back
+(TLFB) data streams into <a href="https://doi.org/10.1371/journal.pone.0291248">quinary word</a>
+summaries for downstream analysis. The basic steps are:</p>
+<ol style="list-style-type: decimal">
+<li>calculate the <em>induction</em> delay (difference, in days, between
+the day a participant was randomized to a trial arm and the day that
+they received the first dose of study drug). The
+<code>public.ctn0094data</code> database has a) the day of randomization
+and b) the days for which study drugs were administered, relative to Day
+0 (the day study consent was signed).</li>
+<li>partition the study days into weeks, then mark which weeks do not
+have a UDS collection event (these will be marked as “missing”).</li>
+<li>summarize the UDS data within each participant by week into symbols
+using <a href="https://doi.org/10.1371/journal.pone.0291248">quinary
+word logic</a>, then collapse the symbols into a participant-specific
+“word”.</li>
+</ol>
+<p>Rather than perform these calculations on all ~3600 participants
+included in <code>public.ctn0094data</code> and
+<code>public.ctn0094extra</code>, we will use the following 10
+participants as examples:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>examplePeople_int <span class="ot">&lt;-</span> <span class="fu">c</span>(1L, 163L, 210L, 242L, 4L, 17L, 13L, 1103L, 233L, 2089L)</span></code></pre></div>
+<hr />
+<p></br></p>
+</div>
+<div id="calculate-induction-delay" class="section level1">
+<h1>Calculate Induction Delay</h1>
+<p>As we mentioned above, the <em>induction</em> delay is the
+difference, in days, between the day a participant was randomized to a
+trial arm and the day that they received the first dose of study drug.
+The reason we need this is because any UDS collected or TLFB recorded on
+or before the induction day must be considered <em>pre-treatment</em>,
+even if the participant has already been assigned to a treatment
+arm.</p>
+<div id="data-setup" class="section level2">
+<h2>Data Setup</h2>
+<p>The <code>randomization</code> day includes a first and second
+randomization day for all participants. For CTN-0027 and CTN-0051, these
+days are the same; for CTN-0030 these days are different. In order to
+find the induction delay, we only need the first randomization event</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>data_ls <span class="ot">&lt;-</span> <span class="fu">loadRawData</span>(<span class="fu">c</span>(<span class="st">&quot;randomization&quot;</span>, <span class="st">&quot;treatment&quot;</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>data_ls<span class="sc">$</span>randomization <span class="ot">&lt;-</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  data_ls<span class="sc">$</span>randomization <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">select</span>(who, when, treatment, <span class="at">randomized =</span> which) <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>  <span class="co"># Remove second randomization events</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>  <span class="fu">filter</span>(randomized <span class="sc">!=</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>  <span class="co"># Retain example participants</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int)</span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>data_ls<span class="sc">$</span>treatment <span class="ot">&lt;-</span> </span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>  data_ls<span class="sc">$</span>treatment <span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>  <span class="co"># Retain example participants</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int)</span></code></pre></div>
+<p>Let’s inspect our results:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>data_ls<span class="sc">$</span>randomization</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 4</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt;     who  when treatment            randomized</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;dbl&gt; &lt;fct&gt;                &lt;fct&gt;     </span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; 1     4     1 Inpatient NR-NTX     1         </span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; 2    13     4 Outpatient BUP       1         </span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; 3    17    13 Methadone            1         </span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; 4   163     6 Outpatient BUP       1         </span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; 5   210     5 Methadone            1         </span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; 6   233     4 Outpatient BUP       1         </span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; 7   242     8 Inpatient NR-NTX     1         </span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; 8  1103     4 Outpatient BUP + EMM 1         </span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; 9  2089     2 Outpatient BUP       1</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>data_ls<span class="sc">$</span>treatment</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,008 × 3</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt;      who amount  when</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="co">#&gt;  1     4      1     1</span></span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a><span class="co">#&gt;  2     4      1    28</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="co">#&gt;  3     4      1    53</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a><span class="co">#&gt;  4     4      1    81</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a><span class="co">#&gt;  5     4      1   109</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="co">#&gt;  6     4      1   141</span></span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="co">#&gt;  7    13      8     4</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="co">#&gt;  8    13     12     5</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a><span class="co">#&gt;  9    13     16     6</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a><span class="co">#&gt; 10    13     16     7</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="co">#&gt; # ℹ 998 more rows</span></span></code></pre></div>
+</div>
+<div id="mark-study-days-with-administered-treatment-drugs" class="section level2">
+<h2>Mark Study Days with Administered Treatment Drugs</h2>
+<p>Some participants were marked as receiving 0mg of the study drug to
+which they were assigned. We want to mark all the days where a
+participant actually got some of the assigned study drug.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>treatTimeLong_df <span class="ot">&lt;-</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>  <span class="co"># Collapse Data List</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  data_ls <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>  <span class="fu">reduce</span>(<span class="at">.f =</span> full_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a>  <span class="fu">arrange</span>(who, when) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a>  <span class="co"># First pass: find any day with a dose of treatment drug</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>  <span class="fu">rowwise</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>    <span class="at">treated =</span> <span class="fu">if_else</span>(</span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>      <span class="at">condition =</span> <span class="sc">!</span><span class="fu">is.na</span>(amount) <span class="sc">&amp;</span> amount <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a>      <span class="at">true =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a>      <span class="at">false =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a>      <span class="at">missing =</span> <span class="cn">FALSE</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a>    )</span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a>  )</span>
+<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="co"># Inspect results</span></span>
+<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a>treatTimeLong_df</span>
+<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,009 × 6</span></span>
+<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a><span class="co">#&gt; # Rowwise: </span></span>
+<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co">#&gt;      who  when treatment        randomized amount treated</span></span>
+<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;dbl&gt; &lt;fct&gt;            &lt;fct&gt;       &lt;dbl&gt; &lt;lgl&gt;  </span></span>
+<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="co">#&gt;  1     4     1 Inpatient NR-NTX 1               1 TRUE   </span></span>
+<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="co">#&gt;  2     4    28 &lt;NA&gt;             &lt;NA&gt;            1 TRUE   </span></span>
+<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="co">#&gt;  3     4    53 &lt;NA&gt;             &lt;NA&gt;            1 TRUE   </span></span>
+<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="co">#&gt;  4     4    81 &lt;NA&gt;             &lt;NA&gt;            1 TRUE   </span></span>
+<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="co">#&gt;  5     4   109 &lt;NA&gt;             &lt;NA&gt;            1 TRUE   </span></span>
+<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="co">#&gt;  6     4   141 &lt;NA&gt;             &lt;NA&gt;            1 TRUE   </span></span>
+<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="co">#&gt;  7    13     4 Outpatient BUP   1               8 TRUE   </span></span>
+<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="co">#&gt;  8    13     5 &lt;NA&gt;             &lt;NA&gt;           12 TRUE   </span></span>
+<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a><span class="co">#&gt;  9    13     6 &lt;NA&gt;             &lt;NA&gt;           16 TRUE   </span></span>
+<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="co">#&gt; 10    13     7 &lt;NA&gt;             &lt;NA&gt;           16 TRUE   </span></span>
+<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a><span class="co">#&gt; # ℹ 999 more rows</span></span></code></pre></div>
+</div>
+<div id="measure-difference-from-randomization-day-to-day-of-first-dose" class="section level2">
+<h2>Measure Difference from Randomization Day to Day of First Dose</h2>
+<p>Some participants received their first non-zero dose of their
+assigned study drug days after they were assigned to a treatment arm. If
+the subject supplies a UDS sample positive for substances of interest or
+records a substance use event in the TLFB after they were assigned to
+treatment but before they received treatment, these should not count
+against the efficacy of the study drug. <strong>NOTE: under the “intent
+to treat” paradigm, this is not the case. For example, it is challenging
+for some patients to start treatment with Naltrexone, so evaluating
+treatment efficacy fairly often requires us to include this time after
+treatment assignment but before induction.</strong></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>inductDelay_df <span class="ot">&lt;-</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  treatTimeLong_df <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="co"># Find the day of the first treatment</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>  <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>  <span class="fu">arrange</span>(when) <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>  <span class="fu">filter</span>(treated) <span class="sc">%&gt;%</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">treatStart =</span> when) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>  <span class="fu">select</span>(who, when, treatStart) <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>  <span class="co"># Add the first day back to the original data</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>  <span class="fu">left_join</span>(treatTimeLong_df, ., <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a>  <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>  <span class="fu">fill</span>(treatStart, <span class="at">.direction =</span> <span class="st">&quot;updown&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a>  <span class="co"># Calculate the delay</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  <span class="fu">filter</span>(randomized <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a>  <span class="co"># This sets time to be missing if the induction was not observed</span></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">inductDelay =</span> treatStart <span class="sc">-</span> when) <span class="sc">%&gt;%</span></span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a>  <span class="fu">select</span>(who, treatment, inductDelay) <span class="sc">%&gt;%</span></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a><span class="co"># Inspect results</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a>inductDelay_df</span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 3</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="co">#&gt;     who treatment            inductDelay</span></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;fct&gt;                      &lt;dbl&gt;</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="co">#&gt; 1     4 Inpatient NR-NTX               0</span></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="co">#&gt; 2    13 Outpatient BUP                 0</span></span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="co">#&gt; 3    17 Methadone                      0</span></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="co">#&gt; 4   163 Outpatient BUP                 0</span></span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="co">#&gt; 5   210 Methadone                      0</span></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#&gt; 6   233 Outpatient BUP                 0</span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a><span class="co">#&gt; 7   242 Inpatient NR-NTX               5</span></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="co">#&gt; 8  1103 Outpatient BUP + EMM           0</span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a><span class="co">#&gt; 9  2089 Outpatient BUP                 0</span></span></code></pre></div>
+<p>We can see that participant 242 received their first dose of
+Inpatient NR-NTX 5 days after they were assigned to that treatment
+arm.</p>
+<p>Let’s clean up our environment before we move on:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">rm</span>(data_ls, treatTimeLong_df)</span></code></pre></div>
+<hr />
+<p></br></p>
+</div>
+</div>
+<div id="partition-visit-weeks-and-impute-missing-visits" class="section level1">
+<h1>Partition Visit Weeks and Impute Missing Visits</h1>
+<p>Now that we have the study day for which each participant received
+their first dose of study drug (induction day), we can partition the
+study days into weeks before and after induction delay as pre-study /
+baseline period and study period, respectively.</p>
+<div id="backbone-timeline-of-clinical-protocol" class="section level2">
+<h2>“Backbone” Timeline of Clinical Protocol</h2>
+<p>If we want to know which visits were missed, we first need to know
+which visits were required by the protocols of the three studies.</p>
+<div id="ctn-0027-and-ctn-0051-protocols" class="section level3">
+<h3>CTN-0027 and CTN-0051 Protocols</h3>
+<p>This code will create a table with the subject ID, which trial they
+participated in, and a column of all possible trial contact days, from
+30 days prior to consent to 24 weeks after. See the function
+documentation for <code>CreateProtocolHistory()</code> for more
+information.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>start_int <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">27</span><span class="st">`</span> <span class="ot">=</span> <span class="sc">-</span>30L, <span class="st">`</span><span class="at">51</span><span class="st">`</span> <span class="ot">=</span> <span class="sc">-</span>30L)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>end_int   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">27</span><span class="st">`</span> <span class="ot">=</span> 168L, <span class="st">`</span><span class="at">51</span><span class="st">`</span> <span class="ot">=</span> 168L)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>backbone2751_df <span class="ot">&lt;-</span> </span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">CreateProtocolHistory</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>      <span class="at">start_vec =</span> start_int,</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>      <span class="at">end_vec =</span> end_int</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int)</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co"># Inspect</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a> backbone2751_df</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,592 × 3</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="co">#&gt;      who project  when</span></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;   &lt;int&gt;</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co">#&gt;  1    13 27        -30</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co">#&gt;  2    13 27        -29</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">#&gt;  3    13 27        -28</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt;  4    13 27        -27</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="co">#&gt;  5    13 27        -26</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co">#&gt;  6    13 27        -25</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co">#&gt;  7    13 27        -24</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a><span class="co">#&gt;  8    13 27        -23</span></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">#&gt;  9    13 27        -22</span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co">#&gt; 10    13 27        -21</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,582 more rows</span></span></code></pre></div>
+</div>
+<div id="ctn-0030-protocol" class="section level3">
+<h3>CTN-0030 Protocol</h3>
+<p>Because the CTN-0030 protocol was adaptive, the amount of time
+requested to be spent in the study will change based on the
+participants’ reactions to the first phase of treatment. See the
+function documentation for <code>CreateCTN30ProtocolHistory()</code> for
+more information.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>backbone30_df <span class="ot">&lt;-</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>    randomization <span class="sc">%&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    <span class="fu">full_join</span>(everybody, <span class="at">by =</span> <span class="st">&quot;who&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="fu">filter</span>(project <span class="sc">==</span> <span class="st">&quot;30&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    <span class="fu">CreateCTN30ProtocolHistory</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">project =</span> <span class="st">&quot;30&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>    <span class="fu">select</span>(who, project, when)</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="co"># Inspect</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>backbone30_df</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="co">#&gt; # A tibble: 402 × 3</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a><span class="co">#&gt;      who project  when</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt;</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="co">#&gt;  1     1 30        -30</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="co">#&gt;  2     1 30        -29</span></span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="co">#&gt;  3     1 30        -28</span></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="co">#&gt;  4     1 30        -27</span></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="co">#&gt;  5     1 30        -26</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a><span class="co">#&gt;  6     1 30        -25</span></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co">#&gt;  7     1 30        -24</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co">#&gt;  8     1 30        -23</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a><span class="co">#&gt;  9     1 30        -22</span></span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a><span class="co">#&gt; 10     1 30        -21</span></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co">#&gt; # ℹ 392 more rows</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a>backbone30_df <span class="sc">%&gt;%</span> </span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>  <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">lastDay =</span> <span class="fu">max</span>(when))</span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 2</span></span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a><span class="co">#&gt;     who lastDay</span></span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt;   &lt;dbl&gt;</span></span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co">#&gt; 1     1      98</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a><span class="co">#&gt; 2  1103     242</span></span></code></pre></div>
+<p>We can clearly see that the protocol length for some participants in
+CTN-0030 was much longer than others.</p>
+</div>
+<div id="combined-backbone" class="section level3">
+<h3>Combined “Backbone”</h3>
+<p>We can now combine these two datasets and clean up our
+environment.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>backbone_df <span class="ot">&lt;-</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">bind_rows</span>(backbone2751_df, backbone30_df) <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>    <span class="fu">arrange</span>(who)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a><span class="fu">rm</span>(backbone2751_df, backbone30_df, start_int, end_int)</span></code></pre></div>
+</div>
+</div>
+<div id="mark-missing-visits" class="section level2">
+<h2>Mark Missing Visits</h2>
+<p>Now that we know the start of treatment and range of expected
+participation days per protocol, we can take the “difference” to find
+out when participants were supposed to visit the clinic, but did
+not.</p>
+<div id="data-setup-1" class="section level3">
+<h3>Data Setup</h3>
+<p>Let’s set up the data for our example people:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>data_ls <span class="ot">&lt;-</span> <span class="fu">loadRawData</span>(<span class="fu">c</span>(<span class="st">&quot;randomization&quot;</span>, <span class="st">&quot;visit&quot;</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>data_ls<span class="sc">$</span>randomization <span class="ot">&lt;-</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>  data_ls<span class="sc">$</span>randomization <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>  <span class="fu">select</span>(who, when, treatment, <span class="at">randomized =</span> which) <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>  <span class="co"># Remove second randomization events</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>  <span class="fu">filter</span>(randomized <span class="sc">!=</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>  <span class="co"># Retain example participants</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>data_ls<span class="sc">$</span>visit <span class="ot">&lt;-</span> </span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>  data_ls<span class="sc">$</span>visit <span class="sc">%&gt;%</span> </span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int)</span></code></pre></div>
+</div>
+<div id="add-first-randomization-day" class="section level3">
+<h3>Add First Randomization Day</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>timelineRand1_df <span class="ot">&lt;-</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    data_ls<span class="sc">$</span>randomization <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">randomized =</span> randomized <span class="sc">==</span> <span class="st">&quot;1&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>    <span class="co"># Join to backbone and arrange within subject by day</span></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>    <span class="fu">full_join</span>(backbone_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    <span class="fu">arrange</span>(when, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>    <span class="fu">select</span>(who, project, when, randomized)</span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="co"># Inspect</span></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>timelineRand1_df</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,994 × 4</span></span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="co">#&gt; # Groups:   who [10]</span></span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a><span class="co">#&gt;      who project  when randomized</span></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;lgl&gt;     </span></span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="co">#&gt;  1     1 30        -30 NA        </span></span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="co">#&gt;  2     1 30        -29 NA        </span></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="co">#&gt;  3     1 30        -28 NA        </span></span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="co">#&gt;  4     1 30        -27 NA        </span></span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a><span class="co">#&gt;  5     1 30        -26 NA        </span></span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a><span class="co">#&gt;  6     1 30        -25 NA        </span></span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a><span class="co">#&gt;  7     1 30        -24 NA        </span></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a><span class="co">#&gt;  8     1 30        -23 NA        </span></span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a><span class="co">#&gt;  9     1 30        -22 NA        </span></span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a><span class="co">#&gt; 10     1 30        -21 NA        </span></span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,984 more rows</span></span></code></pre></div>
+</div>
+<div id="add-on-the-visit-days" class="section level3">
+<h3>Add on the Visit Days</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>timelineVisit1_df <span class="ot">&lt;-</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>    data_ls<span class="sc">$</span>visit <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="fu">select</span>(who, when, visit, <span class="at">status =</span> what) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="fu">filter</span>(status <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;visit&quot;</span>, <span class="st">&quot;final&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">visit =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>    <span class="fu">select</span>(who, when, visit) <span class="sc">%&gt;%</span></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>    <span class="fu">left_join</span>(timelineRand1_df, ., <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>))</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co"># Inspect</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>timelineVisit1_df</span>
+<span id="cb13-11"><a href="#cb13-11" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1,994 × 5</span></span>
+<span id="cb13-12"><a href="#cb13-12" tabindex="-1"></a><span class="co">#&gt; # Groups:   who [10]</span></span>
+<span id="cb13-13"><a href="#cb13-13" tabindex="-1"></a><span class="co">#&gt;      who project  when randomized visit</span></span>
+<span id="cb13-14"><a href="#cb13-14" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;chr&gt;   &lt;dbl&gt; &lt;lgl&gt;      &lt;lgl&gt;</span></span>
+<span id="cb13-15"><a href="#cb13-15" tabindex="-1"></a><span class="co">#&gt;  1     1 30        -30 NA         NA   </span></span>
+<span id="cb13-16"><a href="#cb13-16" tabindex="-1"></a><span class="co">#&gt;  2     1 30        -29 NA         NA   </span></span>
+<span id="cb13-17"><a href="#cb13-17" tabindex="-1"></a><span class="co">#&gt;  3     1 30        -28 NA         NA   </span></span>
+<span id="cb13-18"><a href="#cb13-18" tabindex="-1"></a><span class="co">#&gt;  4     1 30        -27 NA         NA   </span></span>
+<span id="cb13-19"><a href="#cb13-19" tabindex="-1"></a><span class="co">#&gt;  5     1 30        -26 NA         NA   </span></span>
+<span id="cb13-20"><a href="#cb13-20" tabindex="-1"></a><span class="co">#&gt;  6     1 30        -25 NA         NA   </span></span>
+<span id="cb13-21"><a href="#cb13-21" tabindex="-1"></a><span class="co">#&gt;  7     1 30        -24 NA         NA   </span></span>
+<span id="cb13-22"><a href="#cb13-22" tabindex="-1"></a><span class="co">#&gt;  8     1 30        -23 NA         NA   </span></span>
+<span id="cb13-23"><a href="#cb13-23" tabindex="-1"></a><span class="co">#&gt;  9     1 30        -22 NA         NA   </span></span>
+<span id="cb13-24"><a href="#cb13-24" tabindex="-1"></a><span class="co">#&gt; 10     1 30        -21 NA         NA   </span></span>
+<span id="cb13-25"><a href="#cb13-25" tabindex="-1"></a><span class="co">#&gt; # ℹ 1,984 more rows</span></span></code></pre></div>
+<p>Most (6 of 7 days, on average) of the data will be missing values
+(shown by <code>NA</code>) because participants were not expected to
+visit the clinic more than once per week.</p>
+</div>
+<div id="impute-the-missing-visits" class="section level3">
+<h3>Impute the Missing Visits</h3>
+<p>This function will assign visit values to “missing” roughly every
+seven days that a visit hasn’t been recorded. See the function
+documentation for <code>MarkMissing()</code> for more information.
+<em>Note: this function can take a while to run if used on thousands of
+participants over dozens of weeks each.</em></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>timelineMissing1_df <span class="ot">&lt;-</span> <span class="fu">MarkMissing</span>(timelineVisit1_df) </span></code></pre></div>
+</div>
+<div id="clean-up-the-results" class="section level3">
+<h3>Clean up the Results</h3>
+<p>We aren’t showing the results from the function above because they
+still need to be wrangled a bit.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>derived_visitImputed <span class="ot">&lt;-</span></span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>    timelineMissing1_df <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">visit =</span> <span class="fu">as.character</span>(visit)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>    <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">visit =</span> <span class="st">&quot;&quot;</span>, <span class="at">visitYM =</span> <span class="st">&quot;&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">visitImputed =</span> <span class="fu">paste0</span>(visit, visitYM)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>        <span class="at">visitImputed =</span> <span class="fu">str_replace</span>(</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>            visitImputed, <span class="at">pattern =</span> <span class="st">&quot;TRUETRUE&quot;</span>, <span class="at">replacement =</span> <span class="st">&quot;Present&quot;</span></span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a>        )</span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a>    <span class="fu">select</span>(who, when, visitImputed) <span class="sc">%&gt;%</span></span>
+<span id="cb15-12"><a href="#cb15-12" tabindex="-1"></a>    <span class="fu">filter</span>(visitImputed <span class="sc">!=</span> <span class="st">&quot;&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb15-13"><a href="#cb15-13" tabindex="-1"></a>    <span class="fu">ungroup</span>()</span>
+<span id="cb15-14"><a href="#cb15-14" tabindex="-1"></a></span>
+<span id="cb15-15"><a href="#cb15-15" tabindex="-1"></a><span class="co"># Inspect</span></span>
+<span id="cb15-16"><a href="#cb15-16" tabindex="-1"></a>derived_visitImputed</span>
+<span id="cb15-17"><a href="#cb15-17" tabindex="-1"></a><span class="co">#&gt; # A tibble: 256 × 3</span></span>
+<span id="cb15-18"><a href="#cb15-18" tabindex="-1"></a><span class="co">#&gt;      who  when visitImputed</span></span>
+<span id="cb15-19"><a href="#cb15-19" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;       </span></span>
+<span id="cb15-20"><a href="#cb15-20" tabindex="-1"></a><span class="co">#&gt;  1     1     0 Missing     </span></span>
+<span id="cb15-21"><a href="#cb15-21" tabindex="-1"></a><span class="co">#&gt;  2     1     7 Missing     </span></span>
+<span id="cb15-22"><a href="#cb15-22" tabindex="-1"></a><span class="co">#&gt;  3     1    14 Missing     </span></span>
+<span id="cb15-23"><a href="#cb15-23" tabindex="-1"></a><span class="co">#&gt;  4     1    21 Missing     </span></span>
+<span id="cb15-24"><a href="#cb15-24" tabindex="-1"></a><span class="co">#&gt;  5     1    28 Missing     </span></span>
+<span id="cb15-25"><a href="#cb15-25" tabindex="-1"></a><span class="co">#&gt;  6     1    35 Missing     </span></span>
+<span id="cb15-26"><a href="#cb15-26" tabindex="-1"></a><span class="co">#&gt;  7     1    42 Missing     </span></span>
+<span id="cb15-27"><a href="#cb15-27" tabindex="-1"></a><span class="co">#&gt;  8     1    49 Missing     </span></span>
+<span id="cb15-28"><a href="#cb15-28" tabindex="-1"></a><span class="co">#&gt;  9     1    56 Missing     </span></span>
+<span id="cb15-29"><a href="#cb15-29" tabindex="-1"></a><span class="co">#&gt; 10     1    63 Missing     </span></span>
+<span id="cb15-30"><a href="#cb15-30" tabindex="-1"></a><span class="co">#&gt; # ℹ 246 more rows</span></span></code></pre></div>
+<p>Let’s now clean up our environment:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">rm</span>(</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>  backbone_df, data_ls, timelineMissing1_df, timelineRand1_df, timelineVisit1_df</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>)</span></code></pre></div>
+<hr />
+<p></br></p>
+</div>
+</div>
+</div>
+<div id="summarize-weekly-substance-use-results" class="section level1">
+<h1>Summarize Weekly Substance Use Results</h1>
+<p>This step is the most involved, so we will only show the steps
+necessary to complete this task for our 10 example participants.
+However, the full workflow is available at <LINK>. The general steps for
+randomized trial participants in this procedure are:</p>
+<ol style="list-style-type: decimal">
+<li>Determine which treatment arm to which each participant was
+assigned. Recall that buprenorphine can be used both as a standard
+treatment and an illicit substance. Therefore, having a TLFB record of
+or UDS positive for buprenorphine for a particular study day should not
+automatically be counted as “substance misuse”.</li>
+<li>For the substance(s) of interest (in our case, opioids), indicate
+their presence (or absence) in participants’ data streams for each study
+visit day. This will result in a “long” data table with one row per
+participant per study visit and a logical value indicating if the
+participant used the substance(s) of interest on that day.</li>
+<li>Create a “ticker” of study days, then partition these days into
+study weeks. For an “intent to treat” analysis, day 0 should be the
+randomization day. Otherwise, day 0 should be the induction day
+calculated above. <em>Note: we will use an “intent to treat” analysis
+from this point on.</em></li>
+<li>Summarize substance use within each study week using a <a href="https://doi.org/10.1371/journal.pone.0291248">quinary word</a>.
+For many participants, they have at least one week wherein more than one
+UDS sample was supplied. Our combination logic to summarize detected
+weekly substance use is as follows: if all UDS samples within that study
+week are positive for the substance(s) of interest, then the week is
+marked “+”. If all UDS samples are negative for the substance(s) of
+interest, then the week is marked “-”. If there is a mixture, the week
+is marked “*”. If the participant was supposed to supply a urine sample
+in that week but did not, then the week is marked “o”. If the
+participant was not supposed to supply a urine sample in that week (and
+did not supply one), then the week is marked “_”.</li>
+<li>Group these weekly summaries into trial phase (baseline /
+pre-randomization, phase 1, or phase 2 [CTN-0030 only]) and collapse
+into a single string.</li>
+</ol>
+<p>You may have participants who consented to join the trial but were
+never randomized to a treatment arm. For these individuals, if a
+“complete study summary” is required (that is, you must include all
+participants who consented, even if they never were randomized), we
+recommend creating a use pattern word which is either all “o” or all
+“_”.</p>
+<div id="data-setup-2" class="section level2">
+<h2>Data Setup</h2>
+<p>First we build our data “backbone” as above (showing here to mirror
+the work done in the analysis script):</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="co"># CTN-0027 and CTN-0051</span></span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>start_int <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">27</span><span class="st">`</span> <span class="ot">=</span> <span class="sc">-</span>30L, <span class="st">`</span><span class="at">51</span><span class="st">`</span> <span class="ot">=</span> <span class="sc">-</span>30L)</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>end_int   <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">`</span><span class="at">27</span><span class="st">`</span> <span class="ot">=</span> 168L, <span class="st">`</span><span class="at">51</span><span class="st">`</span> <span class="ot">=</span> 168L) <span class="co"># 24 weeks</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>backbone2751_df <span class="ot">&lt;-</span> <span class="fu">CreateProtocolHistory</span>(</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>    <span class="at">start_vec =</span> start_int, <span class="at">end_vec =</span> end_int</span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a>)</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co"># CTN-0030</span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a>backbone30_df <span class="ot">&lt;-</span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a>    randomization <span class="sc">%&gt;%</span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>    <span class="fu">full_join</span>(everybody, <span class="at">by =</span> <span class="st">&quot;who&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>    <span class="fu">filter</span>(project <span class="sc">==</span> <span class="st">&quot;30&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a>    <span class="fu">CreateCTN30ProtocolHistory</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">project =</span> <span class="st">&quot;30&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a>    <span class="fu">select</span>(who, project, when)</span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="co"># All Days</span></span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a>backbone_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb17-19"><a href="#cb17-19" tabindex="-1"></a>    backbone2751_df, backbone30_df</span>
+<span id="cb17-20"><a href="#cb17-20" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-21"><a href="#cb17-21" tabindex="-1"></a>    <span class="fu">arrange</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb17-22"><a href="#cb17-22" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">project =</span> <span class="fu">factor</span>(project, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;27&quot;</span>, <span class="st">&quot;30&quot;</span>, <span class="st">&quot;51&quot;</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-23"><a href="#cb17-23" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int)</span>
+<span id="cb17-24"><a href="#cb17-24" tabindex="-1"></a></span>
+<span id="cb17-25"><a href="#cb17-25" tabindex="-1"></a><span class="fu">rm</span>(backbone2751_df, backbone30_df, start_int, end_int)</span></code></pre></div>
+<p>Now we create a data set that combines the treatment arm with the
+imputed visits data we calculated above.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a>randomized_df <span class="ot">&lt;-</span></span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>  randomization <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">randomized =</span> <span class="fu">as.integer</span>(<span class="fu">as.character</span>(which))) <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>  <span class="fu">select</span>(who, when, randomized) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a>  <span class="fu">left_join</span>(everybody, <span class="at">by =</span> <span class="st">&quot;who&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>  <span class="fu">filter</span>( <span class="sc">!</span>(randomized <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> project <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;27&quot;</span>, <span class="st">&quot;51&quot;</span>)) ) <span class="sc">%&gt;%</span></span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>project)</span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a>udsUse2_df <span class="ot">&lt;-</span></span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>    backbone_df <span class="sc">%&gt;%</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a>    <span class="fu">left_join</span>(randomized_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a>    <span class="fu">left_join</span>(derived_visitImputed, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a>    <span class="fu">left_join</span>(uds, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a>    <span class="co"># So we can use MarkUse() with UDS data (instead of all_drugs)</span></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;UDS&quot;</span>)</span></code></pre></div>
+<p>This data set is an interesting one. It has one record per
+participant, per study day, <em>per substance reported</em>. So, because
+we are using UDS, this means that only rows which correspond to
+<em>study visit days</em> wherein a urine sample was supplied and
+positive for multiple substances will be duplicated. If we had used TLFB
+data instead, a data table in this form would be orders of magnitude
+longer, with many rows per participant per day. Here are visit days
+wherein substances were detected in the urine of participant 0017:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a>udsUse2_df <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a>  <span class="fu">filter</span>(visitImputed <span class="sc">==</span> <span class="st">&quot;Present&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(what)) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">==</span> <span class="dv">17</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="fu">nrow</span>(.))</span>
+<span id="cb19-6"><a href="#cb19-6" tabindex="-1"></a><span class="co">#&gt; # A tibble: 41 × 7</span></span>
+<span id="cb19-7"><a href="#cb19-7" tabindex="-1"></a><span class="co">#&gt;      who project  when randomized visitImputed what           source</span></span>
+<span id="cb19-8"><a href="#cb19-8" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt; &lt;fct&gt;   &lt;dbl&gt;      &lt;int&gt; &lt;chr&gt;        &lt;fct&gt;          &lt;chr&gt; </span></span>
+<span id="cb19-9"><a href="#cb19-9" tabindex="-1"></a><span class="co">#&gt;  1    17 27          0         NA Present      Amphetamine    UDS   </span></span>
+<span id="cb19-10"><a href="#cb19-10" tabindex="-1"></a><span class="co">#&gt;  2    17 27          0         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-11"><a href="#cb19-11" tabindex="-1"></a><span class="co">#&gt;  3    17 27          0         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-12"><a href="#cb19-12" tabindex="-1"></a><span class="co">#&gt;  4    17 27         21         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-13"><a href="#cb19-13" tabindex="-1"></a><span class="co">#&gt;  5    17 27         28         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-14"><a href="#cb19-14" tabindex="-1"></a><span class="co">#&gt;  6    17 27         28         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-15"><a href="#cb19-15" tabindex="-1"></a><span class="co">#&gt;  7    17 27         35         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-16"><a href="#cb19-16" tabindex="-1"></a><span class="co">#&gt;  8    17 27         35         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-17"><a href="#cb19-17" tabindex="-1"></a><span class="co">#&gt;  9    17 27         49         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-18"><a href="#cb19-18" tabindex="-1"></a><span class="co">#&gt; 10    17 27         56         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-19"><a href="#cb19-19" tabindex="-1"></a><span class="co">#&gt; 11    17 27         56         NA Present      Cocaine        UDS   </span></span>
+<span id="cb19-20"><a href="#cb19-20" tabindex="-1"></a><span class="co">#&gt; 12    17 27         56         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-21"><a href="#cb19-21" tabindex="-1"></a><span class="co">#&gt; 13    17 27         63         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-22"><a href="#cb19-22" tabindex="-1"></a><span class="co">#&gt; 14    17 27         63         NA Present      Cocaine        UDS   </span></span>
+<span id="cb19-23"><a href="#cb19-23" tabindex="-1"></a><span class="co">#&gt; 15    17 27         63         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-24"><a href="#cb19-24" tabindex="-1"></a><span class="co">#&gt; 16    17 27         63         NA Present      Thc            UDS   </span></span>
+<span id="cb19-25"><a href="#cb19-25" tabindex="-1"></a><span class="co">#&gt; 17    17 27         72         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-26"><a href="#cb19-26" tabindex="-1"></a><span class="co">#&gt; 18    17 27         72         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-27"><a href="#cb19-27" tabindex="-1"></a><span class="co">#&gt; 19    17 27         77         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-28"><a href="#cb19-28" tabindex="-1"></a><span class="co">#&gt; 20    17 27         77         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-29"><a href="#cb19-29" tabindex="-1"></a><span class="co">#&gt; 21    17 27         84         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-30"><a href="#cb19-30" tabindex="-1"></a><span class="co">#&gt; 22    17 27         98         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-31"><a href="#cb19-31" tabindex="-1"></a><span class="co">#&gt; 23    17 27        105         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-32"><a href="#cb19-32" tabindex="-1"></a><span class="co">#&gt; 24    17 27        112         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-33"><a href="#cb19-33" tabindex="-1"></a><span class="co">#&gt; 25    17 27        112         NA Present      Cocaine        UDS   </span></span>
+<span id="cb19-34"><a href="#cb19-34" tabindex="-1"></a><span class="co">#&gt; 26    17 27        112         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-35"><a href="#cb19-35" tabindex="-1"></a><span class="co">#&gt; 27    17 27        112         NA Present      Thc            UDS   </span></span>
+<span id="cb19-36"><a href="#cb19-36" tabindex="-1"></a><span class="co">#&gt; 28    17 27        119         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-37"><a href="#cb19-37" tabindex="-1"></a><span class="co">#&gt; 29    17 27        119         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-38"><a href="#cb19-38" tabindex="-1"></a><span class="co">#&gt; 30    17 27        126         NA Present      Amphetamine    UDS   </span></span>
+<span id="cb19-39"><a href="#cb19-39" tabindex="-1"></a><span class="co">#&gt; 31    17 27        126         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-40"><a href="#cb19-40" tabindex="-1"></a><span class="co">#&gt; 32    17 27        126         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-41"><a href="#cb19-41" tabindex="-1"></a><span class="co">#&gt; 33    17 27        133         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-42"><a href="#cb19-42" tabindex="-1"></a><span class="co">#&gt; 34    17 27        133         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-43"><a href="#cb19-43" tabindex="-1"></a><span class="co">#&gt; 35    17 27        147         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-44"><a href="#cb19-44" tabindex="-1"></a><span class="co">#&gt; 36    17 27        147         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-45"><a href="#cb19-45" tabindex="-1"></a><span class="co">#&gt; 37    17 27        156         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-46"><a href="#cb19-46" tabindex="-1"></a><span class="co">#&gt; 38    17 27        156         NA Present      Opioid         UDS   </span></span>
+<span id="cb19-47"><a href="#cb19-47" tabindex="-1"></a><span class="co">#&gt; 39    17 27        156         NA Present      Thc            UDS   </span></span>
+<span id="cb19-48"><a href="#cb19-48" tabindex="-1"></a><span class="co">#&gt; 40    17 27        161         NA Present      Benzodiazepine UDS   </span></span>
+<span id="cb19-49"><a href="#cb19-49" tabindex="-1"></a><span class="co">#&gt; 41    17 27        161         NA Present      Opioid         UDS</span></span></code></pre></div>
+</div>
+<div id="participants-assigned-treatment" class="section level2">
+<h2>Participant’s Assigned Treatment</h2>
+<p>Which substances are considered “approved” and which are
+“illicit”?</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a>nonStudyOpioids_ls <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>  <span class="st">&quot;Buprenorphine&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Opioid&quot;</span>, <span class="st">&quot;Methadone&quot;</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>  <span class="st">&quot;Methadone&quot;</span>     <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Opioid&quot;</span>, <span class="st">&quot;Buprenorphine&quot;</span>),</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>  <span class="st">&quot;Naltrexone&quot;</span>    <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Opioid&quot;</span>, <span class="st">&quot;Methadone&quot;</span>, <span class="st">&quot;Buprenorphine&quot;</span>),</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a>  <span class="st">&quot;Not treated&quot;</span>   <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;Opioid&quot;</span>, <span class="st">&quot;Methadone&quot;</span>, <span class="st">&quot;Buprenorphine&quot;</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>)</span></code></pre></div>
+<p>Now we extract the treatment groups for each clinical trial, so that
+we can mark “illicit” buprenorphine and methadone appropriately.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>treatGroups_ls <span class="ot">&lt;-</span></span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  public.ctn0094data<span class="sc">::</span>randomization <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="fu">filter</span>(who <span class="sc">%in%</span> examplePeople_int) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  <span class="fu">filter</span>(which <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a>  <span class="fu">left_join</span>(everybody, <span class="at">by =</span> <span class="st">&quot;who&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>  <span class="fu">select</span>(who, treatment) <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb21-8"><a href="#cb21-8" tabindex="-1"></a>    <span class="at">treat_drug =</span> <span class="fu">case_when</span>(</span>
+<span id="cb21-9"><a href="#cb21-9" tabindex="-1"></a>      <span class="fu">str_detect</span>(treatment, <span class="st">&quot;BUP&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Buprenorphine&quot;</span>,</span>
+<span id="cb21-10"><a href="#cb21-10" tabindex="-1"></a>      treatment <span class="sc">==</span> <span class="st">&quot;Methadone&quot;</span> <span class="sc">~</span> <span class="st">&quot;Methadone&quot;</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" tabindex="-1"></a>      treatment <span class="sc">==</span> <span class="st">&quot;Inpatient NR-NTX&quot;</span> <span class="sc">~</span> <span class="st">&quot;Naltrexone&quot;</span></span>
+<span id="cb21-12"><a href="#cb21-12" tabindex="-1"></a>    )</span>
+<span id="cb21-13"><a href="#cb21-13" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb21-14"><a href="#cb21-14" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>treatment) <span class="sc">%&gt;%</span></span>
+<span id="cb21-15"><a href="#cb21-15" tabindex="-1"></a>  <span class="fu">split</span>(<span class="at">f =</span> .<span class="sc">$</span>treat_drug) <span class="sc">%&gt;%</span></span>
+<span id="cb21-16"><a href="#cb21-16" tabindex="-1"></a>  <span class="fu">map</span>(<span class="at">.f =</span> <span class="st">&quot;who&quot;</span>)</span>
+<span id="cb21-17"><a href="#cb21-17" tabindex="-1"></a></span>
+<span id="cb21-18"><a href="#cb21-18" tabindex="-1"></a><span class="co"># Inspect</span></span>
+<span id="cb21-19"><a href="#cb21-19" tabindex="-1"></a>treatGroups_ls</span>
+<span id="cb21-20"><a href="#cb21-20" tabindex="-1"></a><span class="co">#&gt; $Buprenorphine</span></span>
+<span id="cb21-21"><a href="#cb21-21" tabindex="-1"></a><span class="co">#&gt; [1]   13  163  233 1103 2089</span></span>
+<span id="cb21-22"><a href="#cb21-22" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-23"><a href="#cb21-23" tabindex="-1"></a><span class="co">#&gt; $Methadone</span></span>
+<span id="cb21-24"><a href="#cb21-24" tabindex="-1"></a><span class="co">#&gt; [1]  17 210</span></span>
+<span id="cb21-25"><a href="#cb21-25" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-26"><a href="#cb21-26" tabindex="-1"></a><span class="co">#&gt; $Naltrexone</span></span>
+<span id="cb21-27"><a href="#cb21-27" tabindex="-1"></a><span class="co">#&gt; [1]   4 242</span></span></code></pre></div>
+<p>This shows us which participants were assigned to buprenorphine,
+methadone, and naltrexone, respectively. We can now compare the
+substances present in urine against the substances the participants are
+supposed to have in their urine. For more information, see the
+documentation for the <code>MarkUse()</code> function.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>opioidUse_df <span class="ot">&lt;-</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>  udsUse2_df <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>    <span class="at">treat_group =</span> <span class="fu">case_when</span>(</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>      who <span class="sc">%in%</span> treatGroups_ls<span class="sc">$</span>Buprenorphine <span class="sc">~</span> <span class="st">&quot;Buprenorphine&quot;</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>      who <span class="sc">%in%</span> treatGroups_ls<span class="sc">$</span>Methadone     <span class="sc">~</span> <span class="st">&quot;Methadone&quot;</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>      who <span class="sc">%in%</span> treatGroups_ls<span class="sc">$</span>Naltrexone    <span class="sc">~</span> <span class="st">&quot;Naltrexone&quot;</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>      <span class="cn">TRUE</span>                                  <span class="sc">~</span> <span class="st">&quot;Not treated&quot;</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>    )</span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>  <span class="fu">split</span>(<span class="at">f =</span> .<span class="sc">$</span>treat_group) <span class="sc">%&gt;%</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a>  <span class="co"># List of data in alphabetical order, so the non-study drugs ls should match</span></span>
+<span id="cb22-13"><a href="#cb22-13" tabindex="-1"></a>  <span class="fu">map2</span>(</span>
+<span id="cb22-14"><a href="#cb22-14" tabindex="-1"></a>    <span class="at">.y =</span> nonStudyOpioids_ls,</span>
+<span id="cb22-15"><a href="#cb22-15" tabindex="-1"></a>    <span class="at">.f =</span> <span class="sc">~</span>{</span>
+<span id="cb22-16"><a href="#cb22-16" tabindex="-1"></a>      <span class="co"># REQUIRES &quot;source&quot; COLUMN</span></span>
+<span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>      <span class="fu">MarkUse</span>(</span>
+<span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a>        <span class="at">targetDrugs_char =</span> .y,</span>
+<span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a>        <span class="at">drugs_df =</span> .x,</span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a>        <span class="co"># because we have participants with no recorded UDS; in practice DO NOT</span></span>
+<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a>        <span class="co">#   use this command</span></span>
+<span id="cb22-22"><a href="#cb22-22" tabindex="-1"></a>        <span class="at">retainEmptyRows =</span> <span class="cn">TRUE</span></span>
+<span id="cb22-23"><a href="#cb22-23" tabindex="-1"></a>      ) </span>
+<span id="cb22-24"><a href="#cb22-24" tabindex="-1"></a>    }</span>
+<span id="cb22-25"><a href="#cb22-25" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb22-26"><a href="#cb22-26" tabindex="-1"></a>  <span class="fu">bind_rows</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb22-27"><a href="#cb22-27" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb22-28"><a href="#cb22-28" tabindex="-1"></a>    <span class="at">udsOpioid =</span> <span class="fu">case_when</span>(</span>
+<span id="cb22-29"><a href="#cb22-29" tabindex="-1"></a>       <span class="fu">is.na</span>(when) <span class="sc">~</span> <span class="cn">NA</span>,</span>
+<span id="cb22-30"><a href="#cb22-30" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(when) <span class="sc">~</span> <span class="cn">TRUE</span></span>
+<span id="cb22-31"><a href="#cb22-31" tabindex="-1"></a>    )</span>
+<span id="cb22-32"><a href="#cb22-32" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-33"><a href="#cb22-33" tabindex="-1"></a>  <span class="fu">select</span>(who, when, udsOpioid)</span>
+<span id="cb22-34"><a href="#cb22-34" tabindex="-1"></a><span class="co">#&gt; Warning: The following drugs were not matched: Methadone. Please check for</span></span>
+<span id="cb22-35"><a href="#cb22-35" tabindex="-1"></a><span class="co">#&gt; possible spelling/capitalization errors.</span></span>
+<span id="cb22-36"><a href="#cb22-36" tabindex="-1"></a><span class="co">#&gt; Warning: The following drugs were not matched: Buprenorphine. Please check for</span></span>
+<span id="cb22-37"><a href="#cb22-37" tabindex="-1"></a><span class="co">#&gt; possible spelling/capitalization errors.</span></span>
+<span id="cb22-38"><a href="#cb22-38" tabindex="-1"></a><span class="co">#&gt; Warning: The following drugs were not matched: Opioid, Methadone. Please check</span></span>
+<span id="cb22-39"><a href="#cb22-39" tabindex="-1"></a><span class="co">#&gt; for possible spelling/capitalization errors.</span></span>
+<span id="cb22-40"><a href="#cb22-40" tabindex="-1"></a><span class="co">#&gt; Warning: No matching drugs found. If you are using the default data set, please</span></span>
+<span id="cb22-41"><a href="#cb22-41" tabindex="-1"></a><span class="co">#&gt;   see the help file for a list of possible drug choices.</span></span></code></pre></div>
+<p>All of the drugs marked above would still be individual rows, so we
+want to get back to “one row per person per day”</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>timelineUDS_df <span class="ot">&lt;-</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>    udsUse2_df <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>    <span class="fu">left_join</span>(opioidUse_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>what, <span class="sc">-</span>source) <span class="sc">%&gt;%</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>  <span class="co"># 2,089 rows to 1,994</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>    <span class="fu">distinct</span>()</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="fu">rm</span>(</span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a>  derived_visitImputed, opioidUse_df, randomized_df, treatGroups_ls, udsUse2_df</span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="counting-days-since-randomization" class="section level2">
+<h2>Counting Days Since Randomization</h2>
+<p>Do we state that by definition any person who wasn’t randomized is an
+early treatment failure? In the sense of evaluating treatment efficacy,
+yes; in evaluating the subject, no. Regardless, no matter the treatment
+outcome definition, participants without a randomization date will be
+listed as treatment failures under the “intent to treat” paradigm.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a>wasRandomized_int <span class="ot">&lt;-</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    timelineUDS_df <span class="sc">%&gt;%</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">randomized =</span> <span class="fu">any</span>(randomized <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a>    <span class="fu">filter</span>(randomized) <span class="sc">%&gt;%</span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>    <span class="fu">pull</span>(who)</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>notRandomized_int <span class="ot">&lt;-</span></span>
+<span id="cb24-8"><a href="#cb24-8" tabindex="-1"></a>    timelineUDS_df <span class="sc">%&gt;%</span></span>
+<span id="cb24-9"><a href="#cb24-9" tabindex="-1"></a>    <span class="fu">filter</span>( <span class="sc">!</span>(who <span class="sc">%in%</span> wasRandomized_int) ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-10"><a href="#cb24-10" tabindex="-1"></a>    <span class="fu">pull</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb24-11"><a href="#cb24-11" tabindex="-1"></a>    <span class="fu">unique</span>()</span>
+<span id="cb24-12"><a href="#cb24-12" tabindex="-1"></a></span>
+<span id="cb24-13"><a href="#cb24-13" tabindex="-1"></a><span class="co"># Was randomized:</span></span>
+<span id="cb24-14"><a href="#cb24-14" tabindex="-1"></a>wasRandomized_int</span>
+<span id="cb24-15"><a href="#cb24-15" tabindex="-1"></a><span class="co">#&gt; [1]    4   13   17  163  210  233  242 1103 2089</span></span>
+<span id="cb24-16"><a href="#cb24-16" tabindex="-1"></a></span>
+<span id="cb24-17"><a href="#cb24-17" tabindex="-1"></a><span class="co"># Wasn&#39;t</span></span>
+<span id="cb24-18"><a href="#cb24-18" tabindex="-1"></a>notRandomized_int</span>
+<span id="cb24-19"><a href="#cb24-19" tabindex="-1"></a><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>Now we need a Study Day ticker (for randomized subjects only). Recall
+that CTN-0030 trial participants potentially have 2 randomization
+days.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a>timelineUDS2_df <span class="ot">&lt;-</span></span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>    timelineUDS_df <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>    <span class="fu">filter</span>(who <span class="sc">%in%</span> wasRandomized_int) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>    <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(randomized)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>        <span class="at">whenRandomized1 =</span> <span class="fu">case_when</span>(randomized <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> when),</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>        <span class="at">whenRandomized2 =</span> <span class="fu">case_when</span>(randomized <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> when)</span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>    <span class="fu">select</span>(who, when, whenRandomized1, whenRandomized2) <span class="sc">%&gt;%</span></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a>    <span class="fu">left_join</span>(timelineUDS_df, ., <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>    <span class="fu">filter</span>(who <span class="sc">%in%</span> wasRandomized_int) <span class="sc">%&gt;%</span></span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>    <span class="co"># Add back in the groupings BEFORE the fill()</span></span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>    <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a>    <span class="fu">fill</span>(whenRandomized1, <span class="at">.direction =</span> <span class="st">&quot;updown&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a>    <span class="fu">fill</span>(whenRandomized2, <span class="at">.direction =</span> <span class="st">&quot;updown&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">daysSinceRand1 =</span> when <span class="sc">-</span> whenRandomized1) <span class="sc">%&gt;%</span></span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">daysSinceRand2 =</span> when <span class="sc">-</span> whenRandomized2) <span class="sc">%&gt;%</span></span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>whenRandomized1, <span class="sc">-</span>whenRandomized2)</span></code></pre></div>
+</div>
+<div id="symbolically-summarize-participant-uds-by-study-week" class="section level2">
+<h2>Symbolically Summarize Participant UDS by Study Week</h2>
+<p>We puts the first day of “study week 1” on the day after
+randomization, not on the day of consent, but consent could have been
+signed also on the same day as randomization.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>weeklyUse_df <span class="ot">&lt;-</span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a>  timelineUDS2_df <span class="sc">%&gt;%</span></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>  <span class="co"># The (daysSinceRand1 - 1) adjustment is to ensure that the first study week</span></span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>  <span class="co">#   is a full 7 days, since &quot;day 0&quot; is the day before randomization. The &quot;+1&quot;</span></span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a>  <span class="co">#   at the end is to shift the study week label such that &quot;week 0&quot; is the </span></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>  <span class="co">#   week *BEFORE* treatment, rather than the first week of treatment. So, the</span></span>
+<span id="cb26-7"><a href="#cb26-7" tabindex="-1"></a>  <span class="co">#   randomization day is the last day of &quot;week 0&quot; (the pre-treatment period).</span></span>
+<span id="cb26-8"><a href="#cb26-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">studyWeek1 =</span> (daysSinceRand1 <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%/%</span> <span class="dv">7</span> <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-9"><a href="#cb26-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">studyWeek2 =</span> (daysSinceRand2 <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%/%</span> <span class="dv">7</span> <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb26-10"><a href="#cb26-10" tabindex="-1"></a>  <span class="fu">group_by</span>(who, studyWeek1) <span class="sc">%&gt;%</span></span>
+<span id="cb26-11"><a href="#cb26-11" tabindex="-1"></a>  <span class="co"># There are some study weeks with multiple UDS, so we count the number of</span></span>
+<span id="cb26-12"><a href="#cb26-12" tabindex="-1"></a>  <span class="co">#   positive and negative UDS per week.</span></span>
+<span id="cb26-13"><a href="#cb26-13" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb26-14"><a href="#cb26-14" tabindex="-1"></a>    <span class="at">nPosUDS  =</span> <span class="fu">sum</span>(udsOpioid <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-15"><a href="#cb26-15" tabindex="-1"></a>    <span class="at">nNegUDS  =</span> <span class="fu">sum</span>(visitImputed <span class="sc">==</span> <span class="st">&quot;Present&quot;</span> <span class="sc">&amp;</span> <span class="fu">is.na</span>(udsOpioid), <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-16"><a href="#cb26-16" tabindex="-1"></a>    <span class="at">nMissing =</span> <span class="fu">sum</span>(visitImputed <span class="sc">==</span> <span class="st">&quot;Missing&quot;</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb26-17"><a href="#cb26-17" tabindex="-1"></a>    <span class="at">randWk1  =</span> <span class="fu">sum</span>(randomized <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb26-18"><a href="#cb26-18" tabindex="-1"></a>    <span class="at">randWk2  =</span> <span class="fu">sum</span>(randomized <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> project <span class="sc">==</span> <span class="st">&quot;30&quot;</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb26-19"><a href="#cb26-19" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb26-20"><a href="#cb26-20" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<p>Now we assign a single symbol to represent the UDS results for each
+participant week. The symbols are (+) for only positive UDS, (–) only
+negative UDS, (*) at least one of each positive and negative UDS, (o)
+UDS required but not collected, or (_) UDS not required.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>useByWeekRandomized_df <span class="ot">&lt;-</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a>  weeklyUse_df <span class="sc">%&gt;%</span></span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a>        <span class="at">udsStatus =</span> <span class="fu">case_when</span>(</span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>            <span class="co"># If we see a positive UDS and no negative UDS, it&#39;s positive</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a>            nPosUDS <span class="sc">&gt;</span> <span class="dv">0</span>  <span class="sc">&amp;</span> nNegUDS <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;+&quot;</span>,</span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>            <span class="co"># If we see a negative UDS and no positive UDS, it&#39;s negative</span></span>
+<span id="cb27-8"><a href="#cb27-8" tabindex="-1"></a>            nPosUDS <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> nNegUDS <span class="sc">&gt;</span> <span class="dv">0</span>  <span class="sc">~</span> <span class="st">&quot;-&quot;</span>,</span>
+<span id="cb27-9"><a href="#cb27-9" tabindex="-1"></a>            <span class="co"># If we see both positive and negative UDS in a single week, it&#39;s both</span></span>
+<span id="cb27-10"><a href="#cb27-10" tabindex="-1"></a>            <span class="co">#   (note that we can recode all &quot;B&quot;s to be &quot;+&quot; as necessary)</span></span>
+<span id="cb27-11"><a href="#cb27-11" tabindex="-1"></a>            nPosUDS <span class="sc">&gt;</span> <span class="dv">0</span>  <span class="sc">&amp;</span> nNegUDS <span class="sc">&gt;</span> <span class="dv">0</span>  <span class="sc">~</span> <span class="st">&quot;*&quot;</span>,</span>
+<span id="cb27-12"><a href="#cb27-12" tabindex="-1"></a>            <span class="co"># If we don&#39;t have any UDS in a week after randomization, it&#39;s missing</span></span>
+<span id="cb27-13"><a href="#cb27-13" tabindex="-1"></a>            <span class="co"># UPDATE 2022-03-08: I had this as a 0 originally, and I was using this</span></span>
+<span id="cb27-14"><a href="#cb27-14" tabindex="-1"></a>            <span class="co">#   in context of consent, not randomization. This was wrong.</span></span>
+<span id="cb27-15"><a href="#cb27-15" tabindex="-1"></a>            nPosUDS <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> nNegUDS <span class="sc">==</span> <span class="dv">0</span> <span class="sc">&amp;</span> studyWeek1 <span class="sc">&gt;=</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;o&quot;</span>,</span>
+<span id="cb27-16"><a href="#cb27-16" tabindex="-1"></a>            <span class="co"># If none of the above are true, but we still have a missing value as</span></span>
+<span id="cb27-17"><a href="#cb27-17" tabindex="-1"></a>            <span class="co">#   marked by the MarkMissing() function, then it&#39;s missing</span></span>
+<span id="cb27-18"><a href="#cb27-18" tabindex="-1"></a>            nMissing <span class="sc">&gt;</span> <span class="dv">0</span> <span class="sc">~</span> <span class="st">&quot;o&quot;</span>,</span>
+<span id="cb27-19"><a href="#cb27-19" tabindex="-1"></a>            <span class="co"># If none of the above conditions are true (probably because it&#39;s a week</span></span>
+<span id="cb27-20"><a href="#cb27-20" tabindex="-1"></a>            <span class="co">#   before randomization but not during a baseline visit for consent),</span></span>
+<span id="cb27-21"><a href="#cb27-21" tabindex="-1"></a>            <span class="co">#   then leave it blank (pre-study)</span></span>
+<span id="cb27-22"><a href="#cb27-22" tabindex="-1"></a>            <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">&quot;_&quot;</span></span>
+<span id="cb27-23"><a href="#cb27-23" tabindex="-1"></a>        )</span>
+<span id="cb27-24"><a href="#cb27-24" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb27-25"><a href="#cb27-25" tabindex="-1"></a>  <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb27-26"><a href="#cb27-26" tabindex="-1"></a>  <span class="co"># For CTN-0030, Phase II could have started on any day of the week, even in</span></span>
+<span id="cb27-27"><a href="#cb27-27" tabindex="-1"></a>  <span class="co">#   the middle of a treatment week. If we try to start counting Phase II</span></span>
+<span id="cb27-28"><a href="#cb27-28" tabindex="-1"></a>  <span class="co">#   weeks the day after treatment arms are switched, we can end up with the</span></span>
+<span id="cb27-29"><a href="#cb27-29" tabindex="-1"></a>  <span class="co">#   last &quot;week&quot; of Phase I not having 7 days. I&#39;m going to leave the first</span></span>
+<span id="cb27-30"><a href="#cb27-30" tabindex="-1"></a>  <span class="co">#   week of Phase II as whatever week the switch happened in.</span></span>
+<span id="cb27-31"><a href="#cb27-31" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb27-32"><a href="#cb27-32" tabindex="-1"></a>    <span class="at">rand1Active =</span> studyWeek1 <span class="sc">&gt;</span> <span class="dv">0</span>,</span>
+<span id="cb27-33"><a href="#cb27-33" tabindex="-1"></a>    <span class="co"># This returns 0 for any week before the Phase II randomization, and 1 for</span></span>
+<span id="cb27-34"><a href="#cb27-34" tabindex="-1"></a>    <span class="co">#   the Phase II randomization week and all subsequent weeks (because the</span></span>
+<span id="cb27-35"><a href="#cb27-35" tabindex="-1"></a>    <span class="co">#   randWk2 column is 1 only for the week of second randomization and 0 </span></span>
+<span id="cb27-36"><a href="#cb27-36" tabindex="-1"></a>    <span class="co">#   all other rows).</span></span>
+<span id="cb27-37"><a href="#cb27-37" tabindex="-1"></a>    <span class="at">rand2Active =</span> <span class="fu">cumsum</span>(randWk2),</span>
+<span id="cb27-38"><a href="#cb27-38" tabindex="-1"></a>    <span class="at">trialPhase  =</span> rand1Active <span class="sc">+</span> rand2Active</span>
+<span id="cb27-39"><a href="#cb27-39" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb27-40"><a href="#cb27-40" tabindex="-1"></a>    <span class="fu">select</span>(</span>
+<span id="cb27-41"><a href="#cb27-41" tabindex="-1"></a>      who, <span class="at">studyWeek =</span> studyWeek1, randWk1, randWk2, udsStatus, trialPhase</span>
+<span id="cb27-42"><a href="#cb27-42" tabindex="-1"></a>    )</span></code></pre></div>
+<p>We then split these rows by trial phase, and collapse the weekly
+symbols into a single string.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a>weeklyOpioidPatterns_df <span class="ot">&lt;-</span></span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>  useByWeekRandomized_df <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>    <span class="at">phase =</span> <span class="fu">case_when</span>(</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a>      trialPhase <span class="sc">==</span> 0L <span class="sc">~</span> <span class="st">&quot;Baseline&quot;</span>,</span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>      trialPhase <span class="sc">==</span> 1L <span class="sc">~</span> <span class="st">&quot;Phase_1&quot;</span>,</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>      trialPhase <span class="sc">==</span> 2L <span class="sc">~</span> <span class="st">&quot;Phase_2&quot;</span></span>
+<span id="cb28-8"><a href="#cb28-8" tabindex="-1"></a>    )</span>
+<span id="cb28-9"><a href="#cb28-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb28-10"><a href="#cb28-10" tabindex="-1"></a>  <span class="fu">group_by</span>(who, phase) <span class="sc">%&gt;%</span></span>
+<span id="cb28-11"><a href="#cb28-11" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb28-12"><a href="#cb28-12" tabindex="-1"></a>    <span class="at">usePattern =</span> <span class="fu">paste0</span>(udsStatus, <span class="at">collapse =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb28-13"><a href="#cb28-13" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb28-14"><a href="#cb28-14" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;phase&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;usePattern&quot;</span>)</span>
+<span id="cb28-15"><a href="#cb28-15" tabindex="-1"></a></span>
+<span id="cb28-16"><a href="#cb28-16" tabindex="-1"></a>weeklyOpioidPatterns_df</span>
+<span id="cb28-17"><a href="#cb28-17" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 4</span></span>
+<span id="cb28-18"><a href="#cb28-18" tabindex="-1"></a><span class="co">#&gt; # Groups:   who [9]</span></span>
+<span id="cb28-19"><a href="#cb28-19" tabindex="-1"></a><span class="co">#&gt;     who Baseline Phase_1                  Phase_2                  </span></span>
+<span id="cb28-20"><a href="#cb28-20" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                    &lt;chr&gt;                    </span></span>
+<span id="cb28-21"><a href="#cb28-21" tabindex="-1"></a><span class="co">#&gt; 1     4 ____-    --------------------o-oo &lt;NA&gt;                     </span></span>
+<span id="cb28-22"><a href="#cb28-22" tabindex="-1"></a><span class="co">#&gt; 2    13 ____*    -------o---o-ooooooooooo &lt;NA&gt;                     </span></span>
+<span id="cb28-23"><a href="#cb28-23" tabindex="-1"></a><span class="co">#&gt; 3    17 _____+-  o-++*++++++-++++++-+++-  &lt;NA&gt;                     </span></span>
+<span id="cb28-24"><a href="#cb28-24" tabindex="-1"></a><span class="co">#&gt; 4   163 _____*   ----oo---o--o*-o-------o &lt;NA&gt;                     </span></span>
+<span id="cb28-25"><a href="#cb28-25" tabindex="-1"></a><span class="co">#&gt; 5   210 _____*   ++++++++-+++-----o-----o &lt;NA&gt;                     </span></span>
+<span id="cb28-26"><a href="#cb28-26" tabindex="-1"></a><span class="co">#&gt; 6   233 ____*    +++++++++++++++++++++++o &lt;NA&gt;                     </span></span>
+<span id="cb28-27"><a href="#cb28-27" tabindex="-1"></a><span class="co">#&gt; 7   242 ____+_   -----------------------  &lt;NA&gt;                     </span></span>
+<span id="cb28-28"><a href="#cb28-28" tabindex="-1"></a><span class="co">#&gt; 8  1103 ____+    +o--oo--o                *+-+---o---------o-o-o-o-</span></span>
+<span id="cb28-29"><a href="#cb28-29" tabindex="-1"></a><span class="co">#&gt; 9  2089 ____*    ++++---+---------------- &lt;NA&gt;</span></span></code></pre></div>
+<p>Notice that we have the opioid UDS results for each subject by week
+split into the various phases of the clinical trial. These summaries are
+in <strong>quinary word</strong> format, following the work in Odom et
+al. (2023) [<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10490938/" class="uri">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10490938/</a>].</p>
+<p>Our last step for the randomized participants is to mark the study
+weeks when these phases start and end.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>derived_weeklyOpioidPatternRand <span class="ot">&lt;-</span></span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>  useByWeekRandomized_df <span class="sc">%&gt;%</span></span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>    <span class="at">randWeek1  =</span> randWk1 <span class="sc">*</span> studyWeek,</span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>    <span class="at">randWeek2  =</span> randWk2 <span class="sc">*</span> studyWeek</span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>    <span class="at">startWeek  =</span> <span class="fu">min</span>(studyWeek),</span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a>    <span class="at">randWeek1  =</span> <span class="fu">max</span>(randWeek1),</span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>    <span class="at">randWeek2  =</span> <span class="fu">if_else</span>( <span class="fu">all</span>(randWeek2 <span class="sc">==</span> <span class="dv">0</span>), <span class="cn">NA_real_</span>, <span class="fu">max</span>(randWeek2) ),</span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a>    <span class="at">endWeek    =</span> <span class="fu">max</span>(studyWeek)</span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a>  <span class="co"># View this smaller data set before joining. In practice, you can comment out</span></span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a>  <span class="co">#   this print() command.</span></span>
+<span id="cb29-15"><a href="#cb29-15" tabindex="-1"></a>  <span class="fu">print</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb29-16"><a href="#cb29-16" tabindex="-1"></a>  <span class="fu">left_join</span>(weeklyOpioidPatterns_df, <span class="at">by =</span> <span class="st">&quot;who&quot;</span>)</span>
+<span id="cb29-17"><a href="#cb29-17" tabindex="-1"></a><span class="co">#&gt; # A tibble: 9 × 5</span></span>
+<span id="cb29-18"><a href="#cb29-18" tabindex="-1"></a><span class="co">#&gt;     who startWeek randWeek1 randWeek2 endWeek</span></span>
+<span id="cb29-19"><a href="#cb29-19" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;</span></span>
+<span id="cb29-20"><a href="#cb29-20" tabindex="-1"></a><span class="co">#&gt; 1     4        -4         0        NA      24</span></span>
+<span id="cb29-21"><a href="#cb29-21" tabindex="-1"></a><span class="co">#&gt; 2    13        -4         0        NA      24</span></span>
+<span id="cb29-22"><a href="#cb29-22" tabindex="-1"></a><span class="co">#&gt; 3    17        -6         0        NA      23</span></span>
+<span id="cb29-23"><a href="#cb29-23" tabindex="-1"></a><span class="co">#&gt; 4   163        -5         0        NA      24</span></span>
+<span id="cb29-24"><a href="#cb29-24" tabindex="-1"></a><span class="co">#&gt; 5   210        -5         0        NA      24</span></span>
+<span id="cb29-25"><a href="#cb29-25" tabindex="-1"></a><span class="co">#&gt; 6   233        -4         0        NA      24</span></span>
+<span id="cb29-26"><a href="#cb29-26" tabindex="-1"></a><span class="co">#&gt; 7   242        -5         0        NA      23</span></span>
+<span id="cb29-27"><a href="#cb29-27" tabindex="-1"></a><span class="co">#&gt; 8  1103        -4         0        10      34</span></span>
+<span id="cb29-28"><a href="#cb29-28" tabindex="-1"></a><span class="co">#&gt; 9  2089        -4         0        NA      24</span></span></code></pre></div>
+</div>
+<div id="symbolically-summarize-non-randomized-participants-uds-by-study-week" class="section level2">
+<h2>Symbolically Summarize Non-Randomized Participants UDS by Study
+Week</h2>
+<p>There are some strange cases where non-randomized participants also
+submitted UDS samples during the clinical trial. We will also create
+quinary words for these participants, but note that most of the UDS
+results will be missing (symbolized by “o”).</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a>nonRandUDS_df <span class="ot">&lt;-</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a>    backbone_df <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a>    <span class="fu">filter</span>(who <span class="sc">%in%</span> notRandomized_int) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a>    <span class="fu">left_join</span>(uds) <span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a>    <span class="co"># MarkUse() requires a &quot;source&quot; column</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">source =</span> <span class="st">&quot;UDS&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a>    <span class="fu">MarkUse</span>(</span>
+<span id="cb30-8"><a href="#cb30-8" tabindex="-1"></a>        <span class="at">targetDrugs_char =</span> nonStudyOpioids_ls<span class="sc">$</span><span class="st">`</span><span class="at">Not treated</span><span class="st">`</span>,</span>
+<span id="cb30-9"><a href="#cb30-9" tabindex="-1"></a>        <span class="at">drugs_df =</span> .</span>
+<span id="cb30-10"><a href="#cb30-10" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb30-11"><a href="#cb30-11" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb30-12"><a href="#cb30-12" tabindex="-1"></a>    <span class="at">udsOpioid =</span> <span class="fu">case_when</span>(</span>
+<span id="cb30-13"><a href="#cb30-13" tabindex="-1"></a>      <span class="sc">!</span><span class="fu">is.na</span>(when) <span class="sc">~</span> <span class="cn">TRUE</span>,</span>
+<span id="cb30-14"><a href="#cb30-14" tabindex="-1"></a>       <span class="fu">is.na</span>(when) <span class="sc">~</span> <span class="cn">NA</span></span>
+<span id="cb30-15"><a href="#cb30-15" tabindex="-1"></a>    )</span>
+<span id="cb30-16"><a href="#cb30-16" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-17"><a href="#cb30-17" tabindex="-1"></a>    <span class="fu">select</span>(who, when, udsOpioid) <span class="sc">%&gt;%</span></span>
+<span id="cb30-18"><a href="#cb30-18" tabindex="-1"></a>  <span class="co"># Uneccessary here, but some UDS records are duplicated</span></span>
+<span id="cb30-19"><a href="#cb30-19" tabindex="-1"></a>    <span class="fu">distinct</span>()</span></code></pre></div>
+<p>Although not present in this small data example, there are positive
+UDS events among the non-randomized. We then construct a “study week”
+ticker to mark such weekly UDS results.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" tabindex="-1"></a>timelineNonRandUDS_df <span class="ot">&lt;-</span></span>
+<span id="cb31-2"><a href="#cb31-2" tabindex="-1"></a>    backbone_df <span class="sc">%&gt;%</span></span>
+<span id="cb31-3"><a href="#cb31-3" tabindex="-1"></a>    <span class="fu">filter</span>(who <span class="sc">%in%</span> notRandomized_int) <span class="sc">%&gt;%</span></span>
+<span id="cb31-4"><a href="#cb31-4" tabindex="-1"></a>    <span class="fu">left_join</span>(nonRandUDS_df, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;who&quot;</span>, <span class="st">&quot;when&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb31-5"><a href="#cb31-5" tabindex="-1"></a>  <span class="co"># Because this week moves off of the consent date, there is no reason to add</span></span>
+<span id="cb31-6"><a href="#cb31-6" tabindex="-1"></a>  <span class="co">#   a `(week - 1)` adjustment</span></span>
+<span id="cb31-7"><a href="#cb31-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">studyWeek =</span> when <span class="sc">%/%</span> <span class="dv">7</span> <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-8"><a href="#cb31-8" tabindex="-1"></a>    <span class="fu">group_by</span>(who, studyWeek) <span class="sc">%&gt;%</span></span>
+<span id="cb31-9"><a href="#cb31-9" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb31-10"><a href="#cb31-10" tabindex="-1"></a>        <span class="at">posUDS  =</span> <span class="fu">sum</span>(udsOpioid <span class="sc">==</span> <span class="dv">1</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&gt;</span> <span class="dv">0</span></span>
+<span id="cb31-11"><a href="#cb31-11" tabindex="-1"></a>    )</span></code></pre></div>
+<p>For these participants who were not randomized at all, they will only
+have “Phase I” missing values.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a>weeklyNonRandPatterns_df <span class="ot">&lt;-</span></span>
+<span id="cb32-2"><a href="#cb32-2" tabindex="-1"></a>  timelineNonRandUDS_df <span class="sc">%&gt;%</span></span>
+<span id="cb32-3"><a href="#cb32-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb32-4"><a href="#cb32-4" tabindex="-1"></a>    <span class="at">udsStatus =</span> <span class="fu">case_when</span>(</span>
+<span id="cb32-5"><a href="#cb32-5" tabindex="-1"></a>      <span class="co"># If they are positive, they are positive</span></span>
+<span id="cb32-6"><a href="#cb32-6" tabindex="-1"></a>      posUDS <span class="sc">~</span> <span class="st">&quot;+&quot;</span>,</span>
+<span id="cb32-7"><a href="#cb32-7" tabindex="-1"></a>      <span class="co"># If they aren&#39;t positive and it&#39;s after the consent week, they are</span></span>
+<span id="cb32-8"><a href="#cb32-8" tabindex="-1"></a>      <span class="co">#   missing (because they weren&#39;t randomized)</span></span>
+<span id="cb32-9"><a href="#cb32-9" tabindex="-1"></a>      <span class="sc">!</span>posUDS <span class="sc">&amp;</span> studyWeek <span class="sc">&gt;=</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;o&quot;</span>,</span>
+<span id="cb32-10"><a href="#cb32-10" tabindex="-1"></a>      <span class="co"># If they aren&#39;t positive and it&#39;s on or before the consent week, then</span></span>
+<span id="cb32-11"><a href="#cb32-11" tabindex="-1"></a>      <span class="co">#   leave it blank (pre-study)</span></span>
+<span id="cb32-12"><a href="#cb32-12" tabindex="-1"></a>      <span class="sc">!</span>posUDS <span class="sc">&amp;</span> studyWeek <span class="sc">&lt;</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;_&quot;</span></span>
+<span id="cb32-13"><a href="#cb32-13" tabindex="-1"></a>    )</span>
+<span id="cb32-14"><a href="#cb32-14" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb32-15"><a href="#cb32-15" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb32-16"><a href="#cb32-16" tabindex="-1"></a>    <span class="at">phase =</span> <span class="fu">case_when</span>(</span>
+<span id="cb32-17"><a href="#cb32-17" tabindex="-1"></a>      studyWeek <span class="sc">&lt;</span>  <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;Baseline&quot;</span>,</span>
+<span id="cb32-18"><a href="#cb32-18" tabindex="-1"></a>      studyWeek <span class="sc">&gt;=</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">&quot;Phase_1&quot;</span></span>
+<span id="cb32-19"><a href="#cb32-19" tabindex="-1"></a>    )</span>
+<span id="cb32-20"><a href="#cb32-20" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb32-21"><a href="#cb32-21" tabindex="-1"></a>  <span class="co"># Again, this print is unecessary, but here it make clear what we are doing</span></span>
+<span id="cb32-22"><a href="#cb32-22" tabindex="-1"></a>  <span class="fu">print</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb32-23"><a href="#cb32-23" tabindex="-1"></a>  <span class="fu">group_by</span>(who, phase) <span class="sc">%&gt;%</span></span>
+<span id="cb32-24"><a href="#cb32-24" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb32-25"><a href="#cb32-25" tabindex="-1"></a>    <span class="at">usePattern =</span> <span class="fu">paste0</span>(udsStatus, <span class="at">collapse =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb32-26"><a href="#cb32-26" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb32-27"><a href="#cb32-27" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;phase&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;usePattern&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb32-28"><a href="#cb32-28" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb32-29"><a href="#cb32-29" tabindex="-1"></a><span class="co">#&gt; # A tibble: 20 × 5</span></span>
+<span id="cb32-30"><a href="#cb32-30" tabindex="-1"></a><span class="co">#&gt; # Groups:   who [1]</span></span>
+<span id="cb32-31"><a href="#cb32-31" tabindex="-1"></a><span class="co">#&gt;      who studyWeek posUDS udsStatus phase   </span></span>
+<span id="cb32-32"><a href="#cb32-32" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;     &lt;dbl&gt; &lt;lgl&gt;  &lt;chr&gt;     &lt;chr&gt;   </span></span>
+<span id="cb32-33"><a href="#cb32-33" tabindex="-1"></a><span class="co">#&gt;  1     1        -4 FALSE  _         Baseline</span></span>
+<span id="cb32-34"><a href="#cb32-34" tabindex="-1"></a><span class="co">#&gt;  2     1        -3 FALSE  _         Baseline</span></span>
+<span id="cb32-35"><a href="#cb32-35" tabindex="-1"></a><span class="co">#&gt;  3     1        -2 FALSE  _         Baseline</span></span>
+<span id="cb32-36"><a href="#cb32-36" tabindex="-1"></a><span class="co">#&gt;  4     1        -1 FALSE  _         Baseline</span></span>
+<span id="cb32-37"><a href="#cb32-37" tabindex="-1"></a><span class="co">#&gt;  5     1         0 FALSE  _         Baseline</span></span>
+<span id="cb32-38"><a href="#cb32-38" tabindex="-1"></a><span class="co">#&gt;  6     1         1 FALSE  o         Phase_1 </span></span>
+<span id="cb32-39"><a href="#cb32-39" tabindex="-1"></a><span class="co">#&gt;  7     1         2 FALSE  o         Phase_1 </span></span>
+<span id="cb32-40"><a href="#cb32-40" tabindex="-1"></a><span class="co">#&gt;  8     1         3 FALSE  o         Phase_1 </span></span>
+<span id="cb32-41"><a href="#cb32-41" tabindex="-1"></a><span class="co">#&gt;  9     1         4 FALSE  o         Phase_1 </span></span>
+<span id="cb32-42"><a href="#cb32-42" tabindex="-1"></a><span class="co">#&gt; 10     1         5 FALSE  o         Phase_1 </span></span>
+<span id="cb32-43"><a href="#cb32-43" tabindex="-1"></a><span class="co">#&gt; 11     1         6 FALSE  o         Phase_1 </span></span>
+<span id="cb32-44"><a href="#cb32-44" tabindex="-1"></a><span class="co">#&gt; 12     1         7 FALSE  o         Phase_1 </span></span>
+<span id="cb32-45"><a href="#cb32-45" tabindex="-1"></a><span class="co">#&gt; 13     1         8 FALSE  o         Phase_1 </span></span>
+<span id="cb32-46"><a href="#cb32-46" tabindex="-1"></a><span class="co">#&gt; 14     1         9 FALSE  o         Phase_1 </span></span>
+<span id="cb32-47"><a href="#cb32-47" tabindex="-1"></a><span class="co">#&gt; 15     1        10 FALSE  o         Phase_1 </span></span>
+<span id="cb32-48"><a href="#cb32-48" tabindex="-1"></a><span class="co">#&gt; 16     1        11 FALSE  o         Phase_1 </span></span>
+<span id="cb32-49"><a href="#cb32-49" tabindex="-1"></a><span class="co">#&gt; 17     1        12 FALSE  o         Phase_1 </span></span>
+<span id="cb32-50"><a href="#cb32-50" tabindex="-1"></a><span class="co">#&gt; 18     1        13 FALSE  o         Phase_1 </span></span>
+<span id="cb32-51"><a href="#cb32-51" tabindex="-1"></a><span class="co">#&gt; 19     1        14 FALSE  o         Phase_1 </span></span>
+<span id="cb32-52"><a href="#cb32-52" tabindex="-1"></a><span class="co">#&gt; 20     1        15 FALSE  o         Phase_1</span></span>
+<span id="cb32-53"><a href="#cb32-53" tabindex="-1"></a></span>
+<span id="cb32-54"><a href="#cb32-54" tabindex="-1"></a>weeklyNonRandPatterns_df</span>
+<span id="cb32-55"><a href="#cb32-55" tabindex="-1"></a><span class="co">#&gt; # A tibble: 1 × 3</span></span>
+<span id="cb32-56"><a href="#cb32-56" tabindex="-1"></a><span class="co">#&gt;     who Baseline Phase_1        </span></span>
+<span id="cb32-57"><a href="#cb32-57" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;          </span></span>
+<span id="cb32-58"><a href="#cb32-58" tabindex="-1"></a><span class="co">#&gt; 1     1 _____    ooooooooooooooo</span></span></code></pre></div>
+<p>Finally, we add in the start and end weeks for these two phases.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" tabindex="-1"></a>derived_weeklyOpioidPatternNonRand <span class="ot">&lt;-</span></span>
+<span id="cb33-2"><a href="#cb33-2" tabindex="-1"></a>  timelineNonRandUDS_df <span class="sc">%&gt;%</span></span>
+<span id="cb33-3"><a href="#cb33-3" tabindex="-1"></a>  <span class="fu">group_by</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb33-4"><a href="#cb33-4" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb33-5"><a href="#cb33-5" tabindex="-1"></a>    <span class="at">startWeek  =</span> <span class="fu">min</span>(studyWeek),</span>
+<span id="cb33-6"><a href="#cb33-6" tabindex="-1"></a>    <span class="at">randWeek1  =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" tabindex="-1"></a>    <span class="at">randWeek2  =</span> <span class="cn">NA_real_</span>,</span>
+<span id="cb33-8"><a href="#cb33-8" tabindex="-1"></a>    <span class="at">endWeek    =</span> <span class="fu">max</span>(studyWeek)</span>
+<span id="cb33-9"><a href="#cb33-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb33-10"><a href="#cb33-10" tabindex="-1"></a>  <span class="fu">left_join</span>(weeklyNonRandPatterns_df, <span class="at">by =</span> <span class="st">&quot;who&quot;</span>)</span></code></pre></div>
+</div>
+<div id="final-product" class="section level2">
+<h2>Final Product</h2>
+<p>At the end of this very long process, we have this:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a>derived_weeklyOpioidPattern <span class="ot">&lt;-</span></span>
+<span id="cb34-2"><a href="#cb34-2" tabindex="-1"></a>    derived_weeklyOpioidPatternRand <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" tabindex="-1"></a>    <span class="fu">bind_rows</span>(derived_weeklyOpioidPatternNonRand) <span class="sc">%&gt;%</span></span>
+<span id="cb34-4"><a href="#cb34-4" tabindex="-1"></a>    <span class="fu">arrange</span>(who) <span class="sc">%&gt;%</span></span>
+<span id="cb34-5"><a href="#cb34-5" tabindex="-1"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">Phase_2 =</span> <span class="st">&quot;&quot;</span>))</span>
+<span id="cb34-6"><a href="#cb34-6" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" tabindex="-1"></a>derived_weeklyOpioidPattern</span>
+<span id="cb34-8"><a href="#cb34-8" tabindex="-1"></a><span class="co">#&gt; # A tibble: 10 × 8</span></span>
+<span id="cb34-9"><a href="#cb34-9" tabindex="-1"></a><span class="co">#&gt;      who startWeek randWeek1 randWeek2 endWeek Baseline Phase_1          Phase_2</span></span>
+<span id="cb34-10"><a href="#cb34-10" tabindex="-1"></a><span class="co">#&gt;    &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;            &lt;chr&gt;  </span></span>
+<span id="cb34-11"><a href="#cb34-11" tabindex="-1"></a><span class="co">#&gt;  1     1        -4        NA        NA      15 _____    ooooooooooooooo  &quot;&quot;     </span></span>
+<span id="cb34-12"><a href="#cb34-12" tabindex="-1"></a><span class="co">#&gt;  2     4        -4         0        NA      24 ____-    ---------------… &quot;&quot;     </span></span>
+<span id="cb34-13"><a href="#cb34-13" tabindex="-1"></a><span class="co">#&gt;  3    13        -4         0        NA      24 ____*    -------o---o-oo… &quot;&quot;     </span></span>
+<span id="cb34-14"><a href="#cb34-14" tabindex="-1"></a><span class="co">#&gt;  4    17        -6         0        NA      23 _____+-  o-++*++++++-+++… &quot;&quot;     </span></span>
+<span id="cb34-15"><a href="#cb34-15" tabindex="-1"></a><span class="co">#&gt;  5   163        -5         0        NA      24 _____*   ----oo---o--o*-… &quot;&quot;     </span></span>
+<span id="cb34-16"><a href="#cb34-16" tabindex="-1"></a><span class="co">#&gt;  6   210        -5         0        NA      24 _____*   ++++++++-+++---… &quot;&quot;     </span></span>
+<span id="cb34-17"><a href="#cb34-17" tabindex="-1"></a><span class="co">#&gt;  7   233        -4         0        NA      24 ____*    +++++++++++++++… &quot;&quot;     </span></span>
+<span id="cb34-18"><a href="#cb34-18" tabindex="-1"></a><span class="co">#&gt;  8   242        -5         0        NA      23 ____+_   ---------------… &quot;&quot;     </span></span>
+<span id="cb34-19"><a href="#cb34-19" tabindex="-1"></a><span class="co">#&gt;  9  1103        -4         0        10      34 ____+    +o--oo--o        &quot;*+-+-…</span></span>
+<span id="cb34-20"><a href="#cb34-20" tabindex="-1"></a><span class="co">#&gt; 10  2089        -4         0        NA      24 ____*    ++++---+-------… &quot;&quot;</span></span></code></pre></div>
+<hr />
+<p></br></p>
+</div>
+</div>
+<div id="wrapping-up" class="section level1">
+<h1>Wrapping Up</h1>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span>
+<span id="cb35-2"><a href="#cb35-2" tabindex="-1"></a><span class="co">#&gt; R version 4.3.1 (2023-06-16)</span></span>
+<span id="cb35-3"><a href="#cb35-3" tabindex="-1"></a><span class="co">#&gt; Platform: x86_64-apple-darwin20 (64-bit)</span></span>
+<span id="cb35-4"><a href="#cb35-4" tabindex="-1"></a><span class="co">#&gt; Running under: macOS Monterey 12.7.1</span></span>
+<span id="cb35-5"><a href="#cb35-5" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb35-6"><a href="#cb35-6" tabindex="-1"></a><span class="co">#&gt; Matrix products: default</span></span>
+<span id="cb35-7"><a href="#cb35-7" tabindex="-1"></a><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib </span></span>
+<span id="cb35-8"><a href="#cb35-8" tabindex="-1"></a><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0</span></span>
+<span id="cb35-9"><a href="#cb35-9" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb35-10"><a href="#cb35-10" tabindex="-1"></a><span class="co">#&gt; locale:</span></span>
+<span id="cb35-11"><a href="#cb35-11" tabindex="-1"></a><span class="co">#&gt; [1] C/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span id="cb35-12"><a href="#cb35-12" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb35-13"><a href="#cb35-13" tabindex="-1"></a><span class="co">#&gt; time zone: America/New_York</span></span>
+<span id="cb35-14"><a href="#cb35-14" tabindex="-1"></a><span class="co">#&gt; tzcode source: internal</span></span>
+<span id="cb35-15"><a href="#cb35-15" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb35-16"><a href="#cb35-16" tabindex="-1"></a><span class="co">#&gt; attached base packages:</span></span>
+<span id="cb35-17"><a href="#cb35-17" tabindex="-1"></a><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span id="cb35-18"><a href="#cb35-18" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb35-19"><a href="#cb35-19" tabindex="-1"></a><span class="co">#&gt; other attached packages:</span></span>
+<span id="cb35-20"><a href="#cb35-20" tabindex="-1"></a><span class="co">#&gt; [1] stringr_1.5.0             tidyr_1.3.0              </span></span>
+<span id="cb35-21"><a href="#cb35-21" tabindex="-1"></a><span class="co">#&gt; [3] tibble_3.2.1              purrr_1.0.1              </span></span>
+<span id="cb35-22"><a href="#cb35-22" tabindex="-1"></a><span class="co">#&gt; [5] dplyr_1.1.2               public.ctn0094extra_1.0.4</span></span>
+<span id="cb35-23"><a href="#cb35-23" tabindex="-1"></a><span class="co">#&gt; [7] public.ctn0094data_1.0.6 </span></span>
+<span id="cb35-24"><a href="#cb35-24" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb35-25"><a href="#cb35-25" tabindex="-1"></a><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span id="cb35-26"><a href="#cb35-26" tabindex="-1"></a><span class="co">#&gt;  [1] vctrs_0.6.3      cli_3.6.1        knitr_1.43       rlang_1.1.1     </span></span>
+<span id="cb35-27"><a href="#cb35-27" tabindex="-1"></a><span class="co">#&gt;  [5] xfun_0.39        stringi_1.7.12   generics_0.1.3   jsonlite_1.8.5  </span></span>
+<span id="cb35-28"><a href="#cb35-28" tabindex="-1"></a><span class="co">#&gt;  [9] glue_1.6.2       htmltools_0.5.5  sass_0.4.6       fansi_1.0.4     </span></span>
+<span id="cb35-29"><a href="#cb35-29" tabindex="-1"></a><span class="co">#&gt; [13] rmarkdown_2.22   evaluate_0.21    jquerylib_0.1.4  fastmap_1.1.1   </span></span>
+<span id="cb35-30"><a href="#cb35-30" tabindex="-1"></a><span class="co">#&gt; [17] yaml_2.3.7       lifecycle_1.0.3  compiler_4.3.1   pkgconfig_2.0.3 </span></span>
+<span id="cb35-31"><a href="#cb35-31" tabindex="-1"></a><span class="co">#&gt; [21] rstudioapi_0.14  digest_0.6.32    R6_2.5.1         tidyselect_1.2.0</span></span>
+<span id="cb35-32"><a href="#cb35-32" tabindex="-1"></a><span class="co">#&gt; [25] utf8_1.2.3       pillar_1.9.0     magrittr_2.0.3   bslib_0.5.0     </span></span>
+<span id="cb35-33"><a href="#cb35-33" tabindex="-1"></a><span class="co">#&gt; [29] withr_2.5.0      tools_4.3.1      cachem_1.0.8</span></span></code></pre></div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
